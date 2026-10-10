@@ -7,11 +7,16 @@ func check(value: bool, message: String) -> void:
 func _initialize() -> void:
 	call_deferred("run")
 func run() -> void:
+	check(ProjectSettings.get_setting("audio/general/default_playback_type.web") == 0, "Web music and SFX use streamed playback")
 	var music = root.get_node("Music")
 	var home = load("res://ui/home_screen.tscn").instantiate()
 	root.add_child(home)
 	current_scene = home
 	check(music.playing, "Song starts in menu")
+	check(music.stream is AudioStreamWAV, "Uses the supplied WAV")
+	check(music.stream.data == preload("res://audio/music/BeepBox-Song.wav").data, "Uses the BeepBox song")
+	check(music.stream.loop_mode == AudioStreamWAV.LOOP_FORWARD and music.stream.loop_end > 0, "WAV loops across the whole song")
+	check(music.stream.get_length() > 12.0 and music.stream.get_length() < 15.0, "Imported song excludes the long silent tail")
 	check(home.menu.get_node("Play").disabled, "Play waits for warmup")
 	while not home._effects_ready:
 		await process_frame

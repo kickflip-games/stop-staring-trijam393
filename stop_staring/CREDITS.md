@@ -2,14 +2,12 @@
 
 ## Music
 
-Music: 'Arcade Ride' by Vens Adams on #Uppbeat
-https://uppbeat.io/c/vens-adams
+Music by **Avi**, created with [BeepBox](https://www.beepbox.co/).
 
-License code: W7I4VVKSL6RKJTYD
+[Original BeepBox composition](https://www.beepbox.co/#9n31s0k0l00e03t2ma7g0fj07r1i0o432T0v1u00f1137qwx10p511d08w2h0E3b6060cT0v1u12f10s4q00d03w2h2E0T1v1u3df0qwx10p511d08AcFbBfQ269cP969bE2bi7iT3v3uf9f0qwx10l511d08SW86bmhkrrzrkrrrE1b6b4h40000000014g000000004h0000000001400000000p1_FHY70IR-EEnFHYu3ws4U1dtd7xAt4zihRQBWq_A1dtd7xBZ1BQ4t17g0FKDbi00).
 
-Attribution and license code supplied by the project owner. The supplied track
-is bundled as `audio/music/arcade_ride.mp3`; this code has not been independently
-validated.
+The supplied WAV is bundled as `audio/music/BeepBox-Song.wav`;
+`audio/music/BeepBox-Song.json` retains the editable composition.
 
 ## Art
 

@@ -39,10 +39,9 @@ pause and clear panels at 1×, 2× and 3×. The editable UI scene is
 
 ## Attribution
 
-[Credits](stop_staring/CREDITS.md) records the supplied music attribution
-and Uppbeat license code, o_lobster's dungeon art, Kenney's Fantasy UI
+[Credits](stop_staring/CREDITS.md) records music by Avi, made with BeepBox, o_lobster's dungeon art, Kenney's Fantasy UI
 Borders and Impact Sounds, the Press Start 2P font, plus outstanding
-provenance for supplied assets. Arcade Ride loops from the main menu through
+provenance for supplied assets. The BeepBox song loops from the main menu through
 gameplay and follows the gameplay slowdown. The menu silently renders the room
 and plays its effect cues before enabling Play to warm graphics and audio.
 [Asset provenance](docs/third_party_assets.md) records
