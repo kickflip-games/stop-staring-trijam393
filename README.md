@@ -7,7 +7,9 @@ Godot 4.8.dev6. The project is in `stop_staring/`.
 Press F5 for the Kickflip splash and title menu. Start begins room 1;
 Level Select opens any of the three rooms. Pop every eye to clear a room
 and advance. R retries the current room; Escape returns to the menu.
-Retry resets the timer and all targets.
+Retry resets the timer and all targets. Navigation uses EasyTransition's
+black fade: 0.25 seconds to cover and 0.25 seconds to uncover. Gameplay
+input and its timer pause through the transition.
 
 `scenes/game.tscn` owns navigation. `scripts/game.gd` defines three layouts
 with 1, 3, and 6 eyes and reuses `scenes/main.tscn` for each room.

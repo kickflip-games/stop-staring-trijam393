@@ -22,11 +22,20 @@ func _ready() -> void:
 	_layer = CanvasLayer.new()
 	_layer.layer = 10
 	add_child(_layer)
-	_show_splash()
+	var transition := get_node("/root/EasyTransition")
+	if transition.has_meta("game_destination"):
+		var destination: Dictionary = transition.get_meta("game_destination")
+		transition.remove_meta("game_destination")
+		match destination.mode:
+			"menu": _build_menu()
+			"select": _build_level_select()
+			"playing": _build_level(destination.level)
+	else:
+		_show_splash()
 
 
 func _process(delta: float) -> void:
-	if mode == "playing":
+	if mode == "playing" and not get_node("/root/EasyTransition").is_transitioning:
 		elapsed += delta
 		_timer_label.text = "%05.1f s" % elapsed
 
@@ -93,6 +102,35 @@ func _show_splash() -> void:
 
 
 func show_menu() -> void:
+	_navigate("menu")
+
+
+func show_level_select() -> void:
+	_navigate("select")
+
+
+func start_level(index: int) -> void:
+	if index >= 0 and index < LEVELS.size():
+		_navigate("playing", index)
+
+
+func _navigate(destination: String, index: int = 0) -> void:
+	var transition := get_node("/root/EasyTransition")
+	if transition.is_transitioning:
+		return
+	transition.set_meta("game_destination", {"mode": destination, "level": index})
+	# Stop launches and timer during cover; the new scene resumes after uncover.
+	if is_instance_valid(gameplay):
+		var player := gameplay.get_node("Player")
+		player._cancel_aim()
+		player.set_physics_process(false)
+		player.set_process_unhandled_input(false)
+	for button in _ui.find_children("*", "Button", true, false):
+		button.disabled = true
+	transition.transition_to("res://scenes/game.tscn")
+
+
+func _build_menu() -> void:
 	mode = "menu"
 	_close_level()
 	_reset_ui()
@@ -109,7 +147,7 @@ func show_menu() -> void:
 	_footer("A small game about a very big staring problem.")
 
 
-func show_level_select() -> void:
+func _build_level_select() -> void:
 	mode = "select"
 	_close_level()
 	_reset_ui()
@@ -126,7 +164,7 @@ func show_level_select() -> void:
 	_footer("All three rooms are available. Escape returns to the title.")
 
 
-func start_level(index: int) -> void:
+func _build_level(index: int) -> void:
 	if index < 0 or index >= LEVELS.size():
 		return
 	_close_level()
@@ -149,6 +187,8 @@ func start_level(index: int) -> void:
 		gameplay.add_child(eye)
 	gameplay.all_eyes_popped.connect(_on_level_clear)
 	add_child(gameplay)
+	if get_node("/root/EasyTransition").is_transitioning:
+		_resume_after_transition()
 	var header := HBoxContainer.new()
 	header.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
 	header.offset_left = 28
@@ -167,6 +207,19 @@ func start_level(index: int) -> void:
 	var menu := _button("MENU  [ESC]", show_menu)
 	menu.custom_minimum_size = Vector2(150, 44)
 	header.add_child(menu)
+
+
+func _resume_after_transition() -> void:
+	var player := gameplay.get_node("Player")
+	var transition := get_node("/root/EasyTransition")
+	var tree := get_tree()
+	player.set_physics_process(false)
+	player.set_process_unhandled_input(false)
+	while is_inside_tree() and transition.is_transitioning:
+		await tree.process_frame
+	if is_inside_tree() and mode == "playing" and is_instance_valid(player):
+		player.set_physics_process(true)
+		player.set_process_unhandled_input(true)
 
 
 func _on_level_clear() -> void:

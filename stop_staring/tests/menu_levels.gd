@@ -11,28 +11,31 @@ func run_checks() -> void:
 	root.size = Vector2i(1280, 800)
 	game = load("res://scenes/game.tscn").instantiate()
 	root.add_child(game)
+	current_scene = game
 	await process_frame
 	await capture("/tmp/stop-staring-splash.png")
 	check(game.mode == "splash", "boot shows splash")
 	game.show_menu()
+	await settle_transition()
 	await process_frame
 	await capture("/tmp/stop-staring-menu.png")
-	press("LEVEL SELECT")
+	await press("LEVEL SELECT")
 	check(game.mode == "select", "level select button opens selection")
 	await process_frame
 	await capture("/tmp/stop-staring-level-select.png")
-	press("BACK")
-	press("START")
+	await press("BACK")
+	await press("START")
 	check(game.mode == "playing" and game.active_level == 0, "start opens first room")
 	await physics_frame
 	await physics_frame
 	check(game.gameplay.remaining_eyes == 1, "first room has one eye")
 	var before: Node = game.gameplay
-	press("RETRY  [R]")
-	check(game.gameplay != before and game.gameplay.remaining_eyes == 1 and is_zero_approx(game.elapsed), "retry reloads targets and timer")
+	await press("RETRY  [R]")
+	check(game.gameplay != before and game.gameplay.remaining_eyes == 1 and game.elapsed < 0.05, "retry reloads targets and timer")
 	for index in range(3):
 		game.show_level_select()
-		press("%02d   %s" % [index + 1, game.LEVELS[index].name.to_upper()])
+		await settle_transition()
+		await press("%02d   %s" % [index + 1, game.LEVELS[index].name.to_upper()])
 		await physics_frame
 		await physics_frame
 		check(game.active_level == index and game.mode == "playing", "direct selection opens requested room")
@@ -52,11 +55,11 @@ func run_checks() -> void:
 		if index == 1:
 			await capture("/tmp/stop-staring-level-clear.png")
 		if index < 2:
-			press("NEXT LEVEL")
+			await press("NEXT LEVEL")
 			check(game.active_level == index + 1 and game.mode == "playing", "next button advances exactly one room")
 		else:
 			check(find_button("NEXT LEVEL") == null, "final room has no invalid next level")
-			press("MAIN MENU")
+			await press("MAIN MENU")
 	check(game.mode == "menu" and game.gameplay == null, "menu removes gameplay")
 	game.start_level(-1)
 	game.start_level(3)
@@ -69,24 +72,29 @@ func run_checks() -> void:
 	click.pressed = true
 	Input.parse_input_event(click)
 	Input.flush_buffered_events()
+	await settle_transition()
 	check(game.mode == "menu", "clicking logo skips splash")
 	game.mode = "splash"
 	game._show_splash()
 	await create_timer(1.9).timeout
+	await settle_transition()
 	check(game.mode == "menu", "splash automatically reaches title")
 	game.start_level(1)
+	await settle_transition()
 	var previous: Node = game.gameplay
 	var key := InputEventKey.new()
 	key.keycode = KEY_R
 	key.pressed = true
 	Input.parse_input_event(key)
 	Input.flush_buffered_events()
+	await settle_transition()
 	check(game.gameplay != previous and game.active_level == 1, "R retries current room")
 	key = InputEventKey.new()
 	key.keycode = KEY_ESCAPE
 	key.pressed = true
 	Input.parse_input_event(key)
 	Input.flush_buffered_events()
+	await settle_transition()
 	check(game.mode == "menu" and game.gameplay == null, "Escape returns to menu")
 	if failures.is_empty():
 		print("PASS: splash, menu buttons, direct selection, three layouts, retry/timer reset, eye-clear progression, final room and menu teardown")
@@ -109,6 +117,13 @@ func press(text: String) -> void:
 	check(button != null, "button exists: " + text)
 	if button:
 		button.pressed.emit()
+		await settle_transition()
+
+func settle_transition() -> void:
+	var transition := root.get_node("EasyTransition")
+	while transition.is_transitioning:
+		await process_frame
+	game = current_scene
 
 func capture(path: String) -> void:
 	if DisplayServer.get_name() == "headless":
