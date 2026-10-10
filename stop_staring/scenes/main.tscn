@@ -14,6 +14,13 @@
 [ext_resource type="Script" path="res://scripts/blob_visual.gd" id="12_visual"]
 [ext_resource type="Script" path="res://scripts/kaykit_arena_visuals.gd" id="13_kaykit"]
 
+[ext_resource type="Script" path="res://scripts/time_effects.gd" id="14_time"]
+[ext_resource type="Script" path="res://scripts/impact_feedback.gd" id="15_feedback"]
+[ext_resource type="Texture2D" path="res://art/blob/contact_shadow.svg" id="16_shadow"]
+[ext_resource type="ArrayMesh" path="res://art/blob/jelly_body.tres" id="17_jelly"]
+[ext_resource type="Material" path="res://art/blob/mint_gummy.tres" id="18_gummy"]
+[ext_resource type="Texture2D" path="res://art/blob/mouth_happy.svg" id="19_mouth"]
+
 [sub_resource type="StandardMaterial3D" id="BackdropMaterial"]
 albedo_color = Color(0.12, 0.15, 0.18, 1)
 
@@ -38,17 +45,18 @@ size = Vector3(1, 10, 2)
 [sub_resource type="BoxShape3D" id="VerticalWallShape"]
 size = Vector3(1, 10, 2)
 
-[sub_resource type="StandardMaterial3D" id="PlayerMaterial"]
-albedo_color = Color(0.46, 0.95, 0.76, 1)
-roughness = 0.65
-
-[sub_resource type="SphereMesh" id="PlayerMesh"]
-material = SubResource("PlayerMaterial")
-radius = 0.45
-height = 0.9
-
 [sub_resource type="SphereShape3D" id="PlayerShape"]
 radius = 0.45
+
+[sub_resource type="StandardMaterial3D" id="ContactShadowMaterial"]
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("16_shadow")
+render_priority = -1
+
+[sub_resource type="QuadMesh" id="ContactShadowMesh"]
+material = SubResource("ContactShadowMaterial")
+size = Vector2(1.35, 1.05)
 
 [sub_resource type="StandardMaterial3D" id="TrailMaterial"]
 transparency = 1
@@ -79,6 +87,12 @@ stream_4/stream = ExtResource("7_hit")
 
 [node name="Main" type="Node3D" unique_id=978000937]
 script = ExtResource("11_level")
+
+[node name="TimeEffects" type="Node" parent="."]
+script = ExtResource("14_time")
+
+[node name="ImpactFeedback" type="Node3D" parent="."]
+script = ExtResource("15_feedback")
 
 [node name="Eye" parent="." unique_id=1398796831 instance=ExtResource("10_eye")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 1.06)
@@ -140,10 +154,27 @@ script = ExtResource("1_blob")
 script = ExtResource("12_visual")
 
 [node name="Mesh" type="MeshInstance3D" parent="Player/VisualPivot" unique_id=1792337885]
-mesh = SubResource("PlayerMesh")
+mesh = ExtResource("17_jelly")
+material_override = ExtResource("18_gummy")
+cast_shadow = 0
+
+[node name="FacePivot" type="Node3D" parent="Player/VisualPivot"]
+position = Vector3(0, -0.045, 0.468)
+
+[node name="Mouth" type="Sprite3D" parent="Player/VisualPivot/FacePivot"]
+texture = ExtResource("19_mouth")
+pixel_size = 0.002
+texture_filter = 1
+cast_shadow = 0
+render_priority = 1
 
 [node name="Collision" type="CollisionShape3D" parent="Player" unique_id=740426430]
 shape = SubResource("PlayerShape")
+
+[node name="ContactShadow" type="MeshInstance3D" parent="Player"]
+position = Vector3(0.14, -0.12, -0.99)
+mesh = SubResource("ContactShadowMesh")
+cast_shadow = 0
 
 [node name="MotionTrail" type="CPUParticles3D" parent="Player"]
 emitting = false
@@ -169,10 +200,11 @@ stream = ExtResource("8_stretch")
 volume_db = -12.0
 
 [node name="Camera" type="Camera3D" parent="." unique_id=662116504]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 20)
 projection = 1
 current = true
-size = 13.0
+size = 13.8
+far = 40.0
 
 [node name="KeyLight" type="DirectionalLight3D" parent="." unique_id=1963982419]
 transform = Transform3D(0.8660254, 0.21130913, -0.45315388, 0, 0.90630776, 0.42261827, 0.5, -0.36599815, 0.7848855, 0, 0, 0)

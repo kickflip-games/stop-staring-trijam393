@@ -8,6 +8,10 @@ const LEVELS := [
 ]
 const MINT := Color("76f2c2")
 const CREAM := Color("fff1cf")
+const PLAYGROUND_INDEX := 3
+const PLAYGROUND := {"name": "Open Playground", "hint": "Experimental arena · 15 eyes"}
+
+@export var start_in_playground: bool = false
 
 var mode: String = "splash"
 var active_level: int = 0
@@ -31,7 +35,10 @@ func _ready() -> void:
 			"select": _build_level_select()
 			"playing": _build_level(destination.level)
 	else:
-		_show_splash()
+		if start_in_playground:
+			_build_level(PLAYGROUND_INDEX)
+		else:
+			_show_splash()
 
 
 func _process(delta: float) -> void:
@@ -110,7 +117,7 @@ func show_level_select() -> void:
 
 
 func start_level(index: int) -> void:
-	if index >= 0 and index < LEVELS.size():
+	if (index >= 0 and index < LEVELS.size()) or index == PLAYGROUND_INDEX:
 		_navigate("playing", index)
 
 
@@ -123,6 +130,7 @@ func _navigate(destination: String, index: int = 0) -> void:
 	if is_instance_valid(gameplay):
 		var player := gameplay.get_node("Player")
 		player._cancel_aim()
+		gameplay.get_node("TimeEffects").reset()
 		player.set_physics_process(false)
 		player.set_process_unhandled_input(false)
 	for button in _ui.find_children("*", "Button", true, false):
@@ -143,6 +151,7 @@ func _build_menu() -> void:
 	var start := _button("START", func(): start_level(0))
 	box.add_child(start)
 	box.add_child(_button("LEVEL SELECT", show_level_select))
+	box.add_child(_button("OPEN PLAYGROUND  ·  EXPERIMENT", start_level.bind(PLAYGROUND_INDEX)))
 	start.grab_focus()
 	_footer("A small game about a very big staring problem.")
 
@@ -165,26 +174,27 @@ func _build_level_select() -> void:
 
 
 func _build_level(index: int) -> void:
-	if index < 0 or index >= LEVELS.size():
+	if index < 0 or index > PLAYGROUND_INDEX:
 		return
 	_close_level()
 	_reset_ui()
 	active_level = index
 	elapsed = 0.0
 	mode = "playing"
-	gameplay = load("res://scenes/main.tscn").instantiate()
+	gameplay = load("res://scenes/open_playground.tscn" if index == PLAYGROUND_INDEX else "res://scenes/main.tscn").instantiate()
 	# Configure before ready so the existing eye counter connects every target.
-	var original_eye := gameplay.get_node("Eye")
-	gameplay.remove_child(original_eye)
-	original_eye.free()
-	var eye_scene := load("res://scenes/eye.tscn") as PackedScene
-	for target in LEVELS[index].eyes:
-		var eye := eye_scene.instantiate()
-		eye.player_path = NodePath("../Player")
-		eye.wall_path = NodePath("../Arena/" + target[0])
-		eye.position = target[1]
-		eye.rotation.z = target[2]
-		gameplay.add_child(eye)
+	if index != PLAYGROUND_INDEX:
+		var original_eye := gameplay.get_node("Eye")
+		gameplay.remove_child(original_eye)
+		original_eye.free()
+		var eye_scene := load("res://scenes/eye.tscn") as PackedScene
+		for target in LEVELS[index].eyes:
+			var eye := eye_scene.instantiate()
+			eye.player_path = NodePath("../Player")
+			eye.wall_path = NodePath("../Arena/" + target[0])
+			eye.position = target[1]
+			eye.rotation.z = target[2]
+			gameplay.add_child(eye)
 	gameplay.all_eyes_popped.connect(_on_level_clear)
 	add_child(gameplay)
 	if get_node("/root/EasyTransition").is_transitioning:
@@ -196,7 +206,8 @@ func _build_level(index: int) -> void:
 	header.offset_top = 10
 	header.add_theme_constant_override("separation", 14)
 	_ui.add_child(header)
-	var name_label := _label("%02d  /  %s" % [index + 1, LEVELS[index].name.to_upper()], 20, CREAM)
+	var title: String = "EXPERIMENT  /  OPEN PLAYGROUND" if index == PLAYGROUND_INDEX else "%02d  /  %s" % [index + 1, LEVELS[index].name.to_upper()]
+	var name_label := _label(title, 20, CREAM)
 	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	header.add_child(name_label)
 	_timer_label = _label("000.0 s", 20, MINT)
@@ -231,6 +242,10 @@ func _on_level_clear() -> void:
 	player.velocity = Vector3.ZERO
 	player.set_physics_process(false)
 	player.set_process_unhandled_input(false)
+	# Let the final eye impact read before the existing clear overlay covers it.
+	await get_tree().create_timer(0.18, true, false, true).timeout
+	if not is_inside_tree() or mode != "clear":
+		return
 	_reset_ui()
 	var shade := ColorRect.new()
 	shade.color = Color(0.025, 0.05, 0.065, 0.9)
@@ -245,14 +260,15 @@ func _on_level_clear() -> void:
 	_ui.add_child(box)
 	box.add_child(_label("ROOM CLEARED", 20, MINT))
 	box.add_child(_label("NO MORE\nSTARING.", 56, CREAM))
-	box.add_child(_label("%s  ·  %.1f seconds" % [LEVELS[active_level].name, elapsed], 20, CREAM))
+	var level_name: String = PLAYGROUND.name if active_level == PLAYGROUND_INDEX else LEVELS[active_level].name
+	box.add_child(_label("%s  ·  %.1f seconds" % [level_name, elapsed], 20, CREAM))
 	if active_level + 1 < LEVELS.size():
 		box.add_child(_button("NEXT LEVEL", start_level.bind(active_level + 1)))
-	else:
+	elif active_level != PLAYGROUND_INDEX:
 		box.add_child(_label("All three rooms cleared. Nicely done.", 18, MINT))
 	box.add_child(_button("TRY AGAIN", start_level.bind(active_level)))
 	box.add_child(_button("MAIN MENU", show_menu))
-	box.get_child(3 if active_level + 1 < LEVELS.size() else 4).grab_focus()
+	box.get_child(4 if active_level + 1 == LEVELS.size() else 3).grab_focus()
 
 
 func _add_menu_background() -> void:

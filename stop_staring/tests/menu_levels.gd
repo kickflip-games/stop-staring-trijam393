@@ -62,7 +62,7 @@ func run_checks() -> void:
 			await press("MAIN MENU")
 	check(game.mode == "menu" and game.gameplay == null, "menu removes gameplay")
 	game.start_level(-1)
-	game.start_level(3)
+	game.start_level(4)
 	check(game.mode == "menu", "invalid level indices are ignored")
 	game.mode = "splash"
 	game._show_splash()

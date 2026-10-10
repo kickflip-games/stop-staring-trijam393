@@ -13,8 +13,10 @@ func _ready() -> void:
 		if eye.active:
 			remaining_eyes += 1
 		eye.popped.connect(_on_eye_popped)
+		eye.hit_confirmed.connect(_on_eye_hit)
 		$Player.wall_bounced.connect(eye.react_to_bounce)
 	$Player.wall_contact.connect(_on_wall_contact)
+	$Player.wall_bounced.connect($ImpactFeedback.wall_hit)
 	_update_counter()
 
 
@@ -33,3 +35,9 @@ func _on_eye_popped(_eye: Node3D) -> void:
 
 func _update_counter() -> void:
 	$HUD/EyeCounter.text = "EYES LEFT: %d" % remaining_eyes if remaining_eyes > 0 else "EYE POPPED!"
+
+
+func _on_eye_hit(contact: Vector3, normal: Vector3, speed: float) -> void:
+	$TimeEffects.hit_stop()
+	$Player/VisualPivot.eye_impact(normal, speed)
+	$ImpactFeedback.eye_hit(contact, normal, speed)

@@ -13,6 +13,8 @@ signal launched(launch_velocity: Vector3)
 @export_range(0.0, 3.0, 0.05) var movement_damping: float = 0.35
 @export_range(0.0, 2.0, 0.05) var settle_speed: float = 0.35
 
+@export_range(0.1, 1.0, 0.05) var aim_time_scale: float = 0.25
+
 const COLLISION_MARGIN: float = 0.001
 const MAX_COLLISIONS_PER_STEP: int = 8
 
@@ -116,11 +118,15 @@ func _notification(what: int) -> void:
 
 
 func _begin_aim(screen_position: Vector2) -> void:
+	var feedback := get_node_or_null("../ImpactFeedback")
+	if feedback != null:
+		feedback.clear_kick()
 	$StretchAudio.stop()
 	_stretch_played = false
 	_drag_origin = _on_plane(screen_position)
 	drag_vector = Vector3.ZERO
 	aiming = true
+	_set_aim_time(true)
 
 
 func _update_aim(screen_position: Vector2, update_audio: bool = true) -> void:
@@ -148,6 +154,7 @@ func _cancel_aim() -> void:
 	$StretchAudio.stop()
 	_stretch_played = false
 	aiming = false
+	_set_aim_time(false)
 	_touch_index = -1
 	drag_vector = Vector3.ZERO
 
@@ -157,3 +164,13 @@ func _on_plane(screen_position: Vector2) -> Vector3:
 	var hit: Vector3 = Plane(Vector3.BACK, 0.0).intersects_ray(
 		camera.project_ray_origin(screen_position), camera.project_ray_normal(screen_position))
 	return hit
+
+
+func _set_aim_time(value: bool) -> void:
+	var effects := get_node_or_null("../TimeEffects")
+	if effects != null:
+		effects.set_aiming(value, aim_time_scale)
+
+
+func _exit_tree() -> void:
+	_set_aim_time(false)

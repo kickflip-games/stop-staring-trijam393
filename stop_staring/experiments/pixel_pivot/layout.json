@@ -1,0 +1,24 @@
+{
+  "size": [48, 30],
+  "border": 2,
+  "spawn": [20, 16],
+  "islands": [
+    {"name": "IslandA", "rect": [10, 7, 4, 8]},
+    {"name": "IslandB", "rect": [27, 6, 10, 3]},
+    {"name": "IslandC", "rect": [28, 19, 5, 6]}
+  ],
+  "eyes": [
+    {"wall": "TopWall", "position": [20, 2], "normal": [0, 1]},
+    {"wall": "TopWall", "position": [40, 2], "normal": [0, 1]},
+    {"wall": "BottomWall", "position": [8, 28], "normal": [0, -1]},
+    {"wall": "BottomWall", "position": [40, 28], "normal": [0, -1]},
+    {"wall": "LeftWall", "position": [2, 6], "normal": [1, 0]},
+    {"wall": "LeftWall", "position": [2, 23], "normal": [1, 0]},
+    {"wall": "RightWall", "position": [46, 8], "normal": [-1, 0]},
+    {"wall": "RightWall", "position": [46, 23], "normal": [-1, 0]},
+    {"wall": "IslandA", "position": [14, 11], "normal": [1, 0]},
+    {"wall": "IslandA", "position": [12, 15], "normal": [0, 1]},
+    {"wall": "IslandB", "position": [32, 9], "normal": [0, 1]},
+    {"wall": "IslandC", "position": [28, 22], "normal": [-1, 0]}
+  ]
+}

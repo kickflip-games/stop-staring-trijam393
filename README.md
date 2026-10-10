@@ -2,6 +2,16 @@
 
 Godot 4.8.dev6. The project is in `stop_staring/`.
 
+## 2D tilesheet setup
+
+The supplied dungeon sheets are saved and configured in
+`stop_staring/assets/2d/dungeon_crawler/`. Open
+`stop_staring/scenes/2d/dungeon_tiles_preview.tscn` and press **F6** for the
+editable room and animation preview. The shared TileSet provides a 16 × 16
+grid with wall collisions; the SpriteFrames resource provides 17 animations.
+See the asset folder's README for atlas IDs and usage. This is the first
+asset setup step for the proposed 2D conversion.
+
 ## Menu and levels
 
 Press F5 for the Kickflip splash and title menu. Start begins room 1;

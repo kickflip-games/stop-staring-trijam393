@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "Mint gummy"
+albedo_color = Color(0.145098, 0.866667, 0.721569, 1)
+roughness = 0.26
+metallic_specular = 0.6
+rim_enabled = true
+rim = 0.4
+rim_tint = 0.3
+clearcoat_enabled = true
+clearcoat = 0.35
+clearcoat_roughness = 0.2
+emission_enabled = true
+emission = Color(0.04, 0.35, 0.25, 1)
+emission_energy_multiplier = 0.12

@@ -1,0 +1,223 @@
+[gd_scene format=4]
+
+[ext_resource type="TileSet" path="res://assets/2d/dungeon_crawler/dungeon_tileset.tres" id="1_s6864"]
+[ext_resource type="SpriteFrames" path="res://assets/2d/dungeon_crawler/dungeon_sprites.tres" id="2_00131"]
+
+[node name="DungeonTilesPreview" type="Node2D" unique_id=1804764880]
+texture_filter = 1
+
+[node name="Backdrop" type="ColorRect" parent="." unique_id=811167878]
+offset_right = 1280.0
+offset_bottom = 800.0
+mouse_filter = 2
+color = Color(0.09019608, 0.09019608, 0.12156863, 1)
+
+[node name="Title" type="Label" parent="." unique_id=1068356864]
+offset_left = 64.0
+offset_top = 28.0
+offset_right = 64.0
+offset_bottom = 28.0
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(0.89411765, 0.8745098, 0.79607844, 1)
+text = "DUNGEON CRAWLER / 2D TILESET"
+
+[node name="Subtitle" type="Label" parent="." unique_id=1431213990]
+offset_left = 64.0
+offset_top = 70.0
+offset_right = 64.0
+offset_bottom = 70.0
+theme_override_font_sizes/font_size = 17
+theme_override_colors/font_color = Color(0.89411765, 0.8745098, 0.79607844, 1)
+text = "16 x 16 grid  /  4x nearest filtering  /  editable floor, walls and props"
+
+[node name="Room" type="Node2D" parent="." unique_id=1359162598]
+position = Vector2(64, 128)
+scale = Vector2(4, 4)
+
+[node name="Floor" type="TileMapLayer" parent="Room" unique_id=1359118901]
+texture_filter = 1
+tile_map_data = PackedByteArray("AAAAAAAAAAACAAIAAAABAAAAAAACAAEAAAACAAAAAAACAAEAAAADAAAAAAACAAEAAAAEAAAAAAACAAEAAAAFAAAAAAACAAEAAAAGAAAAAAACAAEAAAAHAAAAAAACAAEAAAAIAAAAAAACAAEAAAAJAAAAAAACAAEAAAAKAAAAAAACAAEAAAALAAAAAAAFAAIAAAAMAAAAAAACAAEAAAANAAAAAAACAAEAAAAAAAEAAAACAAEAAAABAAEAAAACAAEAAAACAAEAAAACAAEAAAADAAEAAAACAAEAAAAEAAEAAAACAAEAAAAFAAEAAAACAAEAAAAGAAEAAAAFAAIAAAAHAAEAAAACAAEAAAAIAAEAAAACAAEAAAAJAAEAAAACAAEAAAAKAAEAAAACAAEAAAALAAEAAAACAAEAAAAMAAEAAAACAAEAAAANAAEAAAACAAEAAAAAAAIAAAACAAEAAAABAAIAAAAFAAIAAAACAAIAAAACAAEAAAADAAIAAAACAAEAAAAEAAIAAAACAAEAAAAFAAIAAAACAAEAAAAGAAIAAAACAAEAAAAHAAIAAAACAAEAAAAIAAIAAAACAAEAAAAJAAIAAAACAAEAAAAKAAIAAAACAAEAAAALAAIAAAACAAEAAAAMAAIAAAAEAAIAAAANAAIAAAACAAEAAAAAAAMAAAACAAEAAAABAAMAAAACAAEAAAACAAMAAAACAAEAAAADAAMAAAACAAEAAAAEAAMAAAACAAEAAAAFAAMAAAACAAEAAAAGAAMAAAACAAEAAAAHAAMAAAAEAAIAAAAIAAMAAAACAAEAAAAJAAMAAAACAAEAAAAKAAMAAAACAAEAAAALAAMAAAACAAEAAAAMAAMAAAACAAEAAAANAAMAAAACAAEAAAAAAAQAAAACAAEAAAABAAQAAAACAAEAAAACAAQAAAAEAAIAAAADAAQAAAACAAEAAAAEAAQAAAACAAEAAAAFAAQAAAACAAEAAAAGAAQAAAACAAEAAAAHAAQAAAACAAEAAAAIAAQAAAACAAEAAAAJAAQAAAACAAEAAAAKAAQAAAACAAEAAAALAAQAAAACAAEAAAAMAAQAAAACAAEAAAANAAQAAAADAAIAAAAAAAUAAAACAAEAAAABAAUAAAACAAEAAAACAAUAAAACAAEAAAADAAUAAAACAAEAAAAEAAUAAAACAAEAAAAFAAUAAAACAAEAAAAGAAUAAAACAAEAAAAHAAUAAAACAAEAAAAIAAUAAAADAAIAAAAJAAUAAAACAAEAAAAKAAUAAAACAAEAAAALAAUAAAACAAEAAAAMAAUAAAACAAEAAAANAAUAAAACAAEAAAAAAAYAAAACAAEAAAABAAYAAAACAAEAAAACAAYAAAACAAEAAAADAAYAAAADAAIAAAAEAAYAAAACAAEAAAAFAAYAAAACAAEAAAAGAAYAAAACAAEAAAAHAAYAAAACAAEAAAAIAAYAAAACAAEAAAAJAAYAAAACAAEAAAAKAAYAAAACAAEAAAALAAYAAAACAAEAAAAMAAYAAAACAAEAAAANAAYAAAACAAEAAAAAAAcAAAACAAEAAAABAAcAAAACAAEAAAACAAcAAAACAAEAAAADAAcAAAACAAEAAAAEAAcAAAACAAEAAAAFAAcAAAACAAEAAAAGAAcAAAACAAEAAAAHAAcAAAACAAEAAAAIAAcAAAACAAEAAAAJAAcAAAACAAIAAAAKAAcAAAACAAEAAAALAAcAAAACAAEAAAAMAAcAAAACAAEAAAANAAcAAAACAAEAAAAAAAgAAAACAAEAAAABAAgAAAACAAEAAAACAAgAAAACAAEAAAADAAgAAAACAAEAAAAEAAgAAAACAAIAAAAFAAgAAAACAAEAAAAGAAgAAAACAAEAAAAHAAgAAAACAAEAAAAIAAgAAAACAAEAAAAJAAgAAAACAAEAAAAKAAgAAAACAAEAAAALAAgAAAACAAEAAAAMAAgAAAACAAEAAAANAAgAAAACAAEAAAA=")
+tile_set = ExtResource("1_s6864")
+
+[node name="Walls" type="TileMapLayer" parent="Room" unique_id=455372245]
+texture_filter = 1
+tile_map_data = PackedByteArray("AAABAAAAAAAHAAQAAAABAAgAAAACAAYAAAACAAAAAAAHAAQAAAACAAgAAAACAAYAAAADAAAAAAAHAAQAAAADAAgAAAACAAYAAAAEAAAAAAAHAAQAAAAEAAgAAAACAAYAAAAFAAAAAAAHAAQAAAAFAAgAAAACAAYAAAAGAAAAAAAHAAQAAAAGAAgAAAACAAYAAAAHAAAAAAAIAAUAAAAHAAgAAAACAAYAAAAIAAAAAAAHAAQAAAAIAAgAAAACAAYAAAAJAAAAAAAHAAQAAAAJAAgAAAACAAYAAAAKAAAAAAAHAAQAAAAKAAgAAAACAAYAAAALAAAAAAAHAAQAAAALAAgAAAACAAYAAAAMAAAAAAAHAAQAAAAMAAgAAAACAAYAAAAAAAEAAAAEAAUAAAANAAEAAAADAAUAAAAAAAIAAAAEAAUAAAANAAIAAAADAAUAAAAAAAMAAAAEAAUAAAANAAMAAAADAAUAAAAAAAQAAAAEAAUAAAANAAQAAAADAAUAAAAAAAUAAAAEAAUAAAANAAUAAAADAAUAAAAAAAYAAAAEAAUAAAANAAYAAAADAAUAAAAAAAcAAAAEAAUAAAANAAcAAAADAAUAAAAAAAAAAAAGAAQAAAANAAAAAAAIAAQAAAAAAAgAAAABAAYAAAANAAgAAAAFAAYAAAA=")
+tile_set = ExtResource("1_s6864")
+
+[node name="Props" type="TileMapLayer" parent="Room" unique_id=536720450]
+texture_filter = 1
+tile_map_data = PackedByteArray("AAACAAIAAAACAAAAAAADAAIAAAABAAAAAAAJAAUAAAAAAAEAAAALAAYAAAAAAAAAAAA=")
+tile_set = ExtResource("1_s6864")
+
+[node name="LeftTorch" type="AnimatedSprite2D" parent="Room" unique_id=151654398]
+position = Vector2(72, 8)
+sprite_frames = ExtResource("2_00131")
+animation = &"torch"
+autoplay = "torch"
+
+[node name="RightTorch" type="AnimatedSprite2D" parent="Room" unique_id=247420214]
+position = Vector2(168, 8)
+sprite_frames = ExtResource("2_00131")
+animation = &"torch"
+autoplay = "torch"
+
+[node name="Slime" type="AnimatedSprite2D" parent="Room" unique_id=486638726]
+position = Vector2(120, 88)
+sprite_frames = ExtResource("2_00131")
+animation = &"slime_idle"
+autoplay = "slime_idle"
+
+[node name="Goblin" type="AnimatedSprite2D" parent="Room" unique_id=912913132]
+position = Vector2(152, 56)
+sprite_frames = ExtResource("2_00131")
+animation = &"goblin_idle"
+autoplay = "goblin_idle"
+
+[node name="Knight" type="AnimatedSprite2D" parent="Room" unique_id=1093656917]
+position = Vector2(72, 88)
+sprite_frames = ExtResource("2_00131")
+animation = &"knight_idle"
+autoplay = "knight_idle"
+
+[node name="Chest" type="AnimatedSprite2D" parent="Room" unique_id=961649670]
+position = Vector2(184, 40)
+sprite_frames = ExtResource("2_00131")
+animation = &"chest_idle"
+autoplay = "chest_idle"
+
+[node name="PreviewCaption" type="Label" parent="." unique_id=1018175749]
+offset_left = 64.0
+offset_top = 718.0
+offset_right = 64.0
+offset_bottom = 718.0
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.89411765, 0.8745098, 0.79607844, 1)
+text = "ROOM PREVIEW  /  walls have 2D collision on physics layer 1"
+
+[node name="Sample_slime_run" type="AnimatedSprite2D" parent="." unique_id=128513614]
+position = Vector2(1060, 176)
+scale = Vector2(4, 4)
+sprite_frames = ExtResource("2_00131")
+animation = &"slime_run"
+autoplay = "slime_run"
+
+[node name="Label_slime_run" type="Label" parent="." unique_id=282301690]
+offset_left = 1008.0
+offset_top = 218.0
+offset_right = 1008.0
+offset_bottom = 218.0
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.89411765, 0.8745098, 0.79607844, 1)
+text = "slime run"
+
+[node name="Sample_goblin_run" type="AnimatedSprite2D" parent="." unique_id=409286009]
+position = Vector2(1180, 176)
+scale = Vector2(4, 4)
+sprite_frames = ExtResource("2_00131")
+animation = &"goblin_run"
+autoplay = "goblin_run"
+
+[node name="Label_goblin_run" type="Label" parent="." unique_id=167750494]
+offset_left = 1128.0
+offset_top = 218.0
+offset_right = 1128.0
+offset_bottom = 218.0
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.89411765, 0.8745098, 0.79607844, 1)
+text = "goblin run"
+
+[node name="Sample_knight_run" type="AnimatedSprite2D" parent="." unique_id=220053575]
+position = Vector2(1060, 326)
+scale = Vector2(4, 4)
+sprite_frames = ExtResource("2_00131")
+animation = &"knight_run"
+autoplay = "knight_run"
+
+[node name="Label_knight_run" type="Label" parent="." unique_id=1094686714]
+offset_left = 1008.0
+offset_top = 368.0
+offset_right = 1008.0
+offset_bottom = 368.0
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.89411765, 0.8745098, 0.79607844, 1)
+text = "knight run"
+
+[node name="Sample_fly" type="AnimatedSprite2D" parent="." unique_id=463156415]
+position = Vector2(1180, 326)
+scale = Vector2(4, 4)
+sprite_frames = ExtResource("2_00131")
+animation = &"fly"
+autoplay = "fly"
+
+[node name="Label_fly" type="Label" parent="." unique_id=1212488690]
+offset_left = 1128.0
+offset_top = 368.0
+offset_right = 1128.0
+offset_bottom = 368.0
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.89411765, 0.8745098, 0.79607844, 1)
+text = "fly"
+
+[node name="Sample_torch" type="AnimatedSprite2D" parent="." unique_id=1316343851]
+position = Vector2(1060, 476)
+scale = Vector2(4, 4)
+sprite_frames = ExtResource("2_00131")
+animation = &"torch"
+autoplay = "torch"
+
+[node name="Label_torch" type="Label" parent="." unique_id=870096583]
+offset_left = 1008.0
+offset_top = 518.0
+offset_right = 1008.0
+offset_bottom = 518.0
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.89411765, 0.8745098, 0.79607844, 1)
+text = "torch"
+
+[node name="Sample_spikes" type="AnimatedSprite2D" parent="." unique_id=673088537]
+position = Vector2(1180, 476)
+scale = Vector2(4, 4)
+sprite_frames = ExtResource("2_00131")
+animation = &"spikes"
+autoplay = "spikes"
+
+[node name="Label_spikes" type="Label" parent="." unique_id=924422245]
+offset_left = 1128.0
+offset_top = 518.0
+offset_right = 1128.0
+offset_bottom = 518.0
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.89411765, 0.8745098, 0.79607844, 1)
+text = "spikes"
+
+[node name="Sample_bomb" type="AnimatedSprite2D" parent="." unique_id=1305454333]
+position = Vector2(1060, 626)
+scale = Vector2(4, 4)
+sprite_frames = ExtResource("2_00131")
+animation = &"bomb"
+autoplay = "bomb"
+
+[node name="Label_bomb" type="Label" parent="." unique_id=507458586]
+offset_left = 1008.0
+offset_top = 668.0
+offset_right = 1008.0
+offset_bottom = 668.0
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.89411765, 0.8745098, 0.79607844, 1)
+text = "bomb"
+
+[node name="Sample_chest_idle" type="AnimatedSprite2D" parent="." unique_id=1777854406]
+position = Vector2(1180, 626)
+scale = Vector2(4, 4)
+sprite_frames = ExtResource("2_00131")
+animation = &"chest_idle"
+autoplay = "chest_idle"
+
+[node name="Label_chest_idle" type="Label" parent="." unique_id=366741003]
+offset_left = 1128.0
+offset_top = 668.0
+offset_right = 1128.0
+offset_bottom = 668.0
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.89411765, 0.8745098, 0.79607844, 1)
+text = "chest idle"

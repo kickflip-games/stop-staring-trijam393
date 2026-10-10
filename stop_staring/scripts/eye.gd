@@ -2,12 +2,18 @@ extends Node3D
 ## Local -Y points into the arena; rotate around Z for other walls.
 ## Uses swept wall contacts so fast launches cannot tunnel through a trigger.
 signal popped(eye: Node3D)
+signal hit_confirmed(contact: Vector3, normal: Vector3, speed: float)
 
 @export var player_path: NodePath
 @export var wall_path: NodePath
 @export_range(0.1, 2.0, 0.05) var hit_radius: float = 0.7
 @export_range(0.0, 20.0, 0.5) var min_impact_speed: float = 3.0
 @export_range(0.0, 0.35, 0.01) var tracking_limit: float = 0.3
+
+@export_range(1.0, 1.6, 0.05) var pop_bulge: float = 1.3
+@export_range(0.02, 0.08, 0.005) var pop_bulge_duration: float = 0.035
+@export_range(0.04, 0.15, 0.005) var pop_retract_duration: float = 0.075
+@export_range(0.0, 0.2, 0.01) var pop_pitch_variation: float = 0.1
 
 var active: bool = true
 var _pupil_offset := Vector2.ZERO
@@ -45,10 +51,15 @@ func try_hit(wall: Node3D, contact: Vector3, normal: Vector3, speed: float) -> b
 	if local_normal.dot(Vector3.DOWN) < 0.9 or absf(local_contact.x) > hit_radius or absf(local_contact.y) > 0.1:
 		return false
 	active = false
+	$PopAudio.pitch_scale = randf_range(1.0 - pop_pitch_variation, 1.0 + pop_pitch_variation)
 	$PopAudio.play()
+	hit_confirmed.emit(contact, normal, speed)
 	popped.emit(self)
-	var tween := create_tween()
-	tween.tween_property($Eyeball, "scale", Vector3.ONE * 1.18, 0.07)
-	tween.tween_property($Eyeball, "scale", Vector3.ONE * 0.01, 0.16).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	var tween := create_tween().set_ignore_time_scale(true)
+	# Hold the enlarged eye on the impact frame, then retract in real time.
+	$Eyeball.scale = Vector3(pop_bulge, pop_bulge, 1.0)
+	tween.tween_interval(pop_bulge_duration)
+	tween.tween_property($Eyeball, "scale", Vector3(1.5, 0.05, 0.1), pop_retract_duration * 0.55).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tween.tween_property($Eyeball, "scale", Vector3.ONE * 0.01, pop_retract_duration * 0.45)
 	tween.tween_callback($Eyeball.hide)
 	return true
