@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="SpriteFrames" path="res://assets/2d/eyes/eye_sprites.tres" id="1_8r6cf"]
+
+[node name="Eye_look_center" type="Node2D" unique_id=1311131206]
+texture_filter = 1
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1432444117]
+position = Vector2(8, 8)
+scale = Vector2(0.10666667, 0.10526316)
+sprite_frames = ExtResource("1_8r6cf")
+animation = &"look_center"
+autoplay = "look_center"

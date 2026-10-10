@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="SpriteFrames" path="res://assets/2d/eyes/eye_sprites.tres" id="1_t01y4"]
+
+[node name="Eye_blink" type="Node2D" unique_id=838528893]
+texture_filter = 1
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=797471537]
+position = Vector2(8, 8)
+scale = Vector2(0.10666667, 0.10526316)
+sprite_frames = ExtResource("1_t01y4")
+animation = &"blink"
+autoplay = "blink"

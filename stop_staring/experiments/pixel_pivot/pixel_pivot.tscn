@@ -1,0 +1,39 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://experiments/pixel_pivot/presentation.gd" id="1_e8j7l"]
+[ext_resource type="PackedScene" path="res://experiments/pixel_pivot/pixel_arena.tscn" id="2_tjgwt"]
+[ext_resource type="Script" path="res://experiments/pixel_pivot/arena.gd" id="3_2jiyj"]
+
+[node name="PixelPivot" type="Control" unique_id=1147930106]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource("1_e8j7l")
+
+[node name="Backdrop" type="ColorRect" parent="." unique_id=1434336786]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.03529412, 0.050980393, 0.09019608, 1)
+
+[node name="View" type="SubViewportContainer" parent="." unique_id=883539308]
+texture_filter = 1
+layout_mode = 0
+offset_right = 448.0
+offset_bottom = 336.0
+
+[node name="World" type="SubViewport" parent="View" unique_id=1882015457]
+disable_3d = true
+canvas_item_default_texture_filter = 0
+size = Vector2i(448, 336)
+render_target_update_mode = 4
+
+[node name="PixelArena" type="Node2D" parent="View/World" unique_id=1009718093 instance=ExtResource("2_tjgwt")]
+texture_filter = 1
+script = ExtResource("3_2jiyj")
+spawn_position = Vector2(224, 184)
+arena_bounds = Rect2(0, 0, 448, 336)

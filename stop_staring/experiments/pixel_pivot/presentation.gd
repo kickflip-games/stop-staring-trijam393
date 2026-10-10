@@ -1,7 +1,7 @@
 extends Control
 ## Scale the complete room viewport, with letterboxing, never individual PNGs.
 @onready var logical_size := Vector2($View/World.size)
-var display_scale := 1
+var display_scale := 1.0
 var _old_scale_mode := 0
 var _old_scale_size := Vector2i.ZERO
 var _old_minimum := Vector2i.ZERO
@@ -20,9 +20,9 @@ func _ready() -> void:
 
 func fit_view() -> void:
 	var window_size := get_viewport_rect().size
-	display_scale = maxi(1, int(minf(window_size.x / logical_size.x, window_size.y / logical_size.y)))
+	display_scale = maxf(0.001, minf(window_size.x / logical_size.x, window_size.y / logical_size.y))
 	$View.scale = Vector2.ONE * display_scale
-	$View.position = ((window_size - logical_size * display_scale) * 0.5).floor()
+	$View.position = (window_size - logical_size * display_scale) * 0.5
 	# A resize changes pointer mapping. Cancel the gesture instead of launching it.
 	arena.get_node("Slime").cancel_aim()
 
@@ -39,6 +39,13 @@ func _input(event: InputEvent) -> void:
 		var point: Vector2 = (event.position - $View.position) / display_scale
 		if not Rect2(Vector2.ZERO, logical_size).has_point(point):
 			arena.get_node("Slime").cancel_aim()
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F11:
+		arena.get_node("Slime").cancel_aim()
+		var window := get_window()
+		window.mode = Window.MODE_WINDOWED if window.mode == Window.MODE_FULLSCREEN else Window.MODE_FULLSCREEN
+		get_viewport().set_input_as_handled()
 
 func _exit_tree() -> void:
 	get_viewport().size_changed.disconnect(fit_view)

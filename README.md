@@ -7,28 +7,31 @@ A 2D slingshot arcade game made with Godot 4.8.dev6. The project is in
 
 Open `stop_staring/project.godot` and press **F5**. The pixel-art home screen
 opens first; select **Play** to enter the 28 × 21 tile dungeon view with
-six open alcoves and sixteen tracking wall eyes. Pull back and release to launch; re-aim while
-moving, bank off walls, and keep every eye closed at the same time. Each eye reopens after 20 seconds. **R** retries; **P** or **Escape**
+four chunky quadrant islands and sixteen tracking wall eyes. Pull back and release to launch; re-aim while
+moving, bank off walls, and keep every eye closed at the same time. Each eye reopens after 60 seconds. **R** retries; **P** or **Escape**
 pauses. **How to Play** explains the launch and independent eye timers; **Home** in the
-pause or clear panel returns to the title screen.
+pause or clear panel returns to the title screen. The game starts fullscreen; **F11** toggles
+windowed mode. Menu and gameplay fill the available screen while preserving their aspect ratios.
+See [fullscreen captures and checks](docs/fullscreen/README.md).
 
 The editable home scene is `stop_staring/ui/home_screen.tscn`. It reuses the
 game's dungeon tiles, animated slime and torches, wall-eye layers and pixel
-font, at the same integer viewport scales. See
+font, scaled proportionally with the rest of the view. See
 [home screen captures](docs/home_screen/README.md).
 
 [Independent eye timers](docs/independent_eyes/README.md) describes the current
-20-second closure rule, simultaneous win condition, HUD and validation.
+60-second closure rule, simultaneous win condition, HUD and validation.
+
+[Eye gaze cones](docs/gaze_cones/README.md) shows the red pupil-tracking
+light fans, solid-wall occlusion and closed-eye transitions.
 
 See [gameplay documentation](stop_staring/experiments/pixel_pivot/README.md)
 for controls, scene rebuilding, atlas coordinates, tuning and validation.
 [2D captures](docs/pixel_pivot/README.md) retain the room screenshots,
-art checkpoint and movement recording.
+and earlier movement recording.
 
-[Reference arena](docs/reference_arena/README.md) records the current symmetric
-six-alcove map, all sixteen eyes, collision reachability and runtime captures.
-[Earlier composition pass](docs/composition_polish/README.md) retains the previous
-asymmetric map checkpoint.
+[Quadrant arena](docs/quadrant_arena/README.md) records the current symmetric
+four-island map, broad lanes, all sixteen eyes and matched before/after captures.
 
 [Retro UI preview](docs/retro_ui/README.md) shows the pixel font, brass HUD,
 pause and clear panels at 1×, 2× and 3×. The editable UI scene is
@@ -48,8 +51,7 @@ local paths and usage.
 ## Checks
 
 [Action feedback preview](docs/juice/gallery.html) shows the charge, launch,
-eye-hit, synchronized reopen and final-hit/win polish, with a short native
-video and matched captures. [Implementation notes](docs/juice/README.md)
+eye-hit and final-hit/win polish, with a historical native video and matched captures. [Implementation notes](docs/juice/README.md)
 record tuning and validation. Run the feedback fixture with
 `res://experiments/pixel_pivot/tests/juice.gd`.
 

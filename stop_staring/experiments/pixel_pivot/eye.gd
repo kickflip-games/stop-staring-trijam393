@@ -8,7 +8,7 @@ enum State { OPEN, CLOSED }
 @export var facing_normal := Vector2.DOWN
 # The unchanged 24px socket has a 12px visible radius; contact gets 25% slack.
 @export var hit_radius := 15.0
-@export_range(0.1, 120.0, 0.1, "or_greater") var closed_duration := 20.0
+@export_range(0.1, 120.0, 0.1, "or_greater") var closed_duration := 60.0
 @export var reopen_warning_duration := 3.0
 @export var reopen_snap_duration := 0.1
 @export var min_impact_speed := 48.0

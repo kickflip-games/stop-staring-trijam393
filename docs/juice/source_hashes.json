@@ -1,0 +1,13 @@
+{
+  "stop_staring/experiments/pixel_pivot/slime.gd": "8e7793562f04b0af0269880917f0c06e11698bcd78ca0e16947de0a5215c44ba",
+  "stop_staring/experiments/pixel_pivot/arena.gd": "00c43e702c3c7af5806f84f16611b9a19fd3c2ca8fc6ca423869e9a7acb718e4",
+  "stop_staring/experiments/pixel_pivot/eye.gd": "36ef151d701e54ef10e2988d60690f30052ce1f421582054ec92d1930d049d02",
+  "stop_staring/experiments/pixel_pivot/effects.gd": "c23d18a3f7e1198906be022e3f1d5e3282d237c3f28bd75b77a0cd8e4525abc5",
+  "stop_staring/experiments/pixel_pivot/camera.gd": "a62d7380e908b016ed4849fbc3d22104cd17ce0e6ae9c1fde516a0289f82c74e",
+  "stop_staring/experiments/pixel_pivot/clock.gd": "1e0e237f997fcaaf365756c6c2ed5d8e6bd1408dc2d72522dc1158affca6c051",
+  "stop_staring/experiments/pixel_pivot/hud.gd": "7ad5244d8589b57aa6281e95cfc585ac6073e0d75af022506d9844f017c570a7",
+  "stop_staring/experiments/pixel_pivot/juice_screen.gdshader": "f80b5bc8a6a03a4448728aa01544a47c62a5bb2d73bb4dd918aecde0d430344e",
+  "stop_staring/experiments/pixel_pivot/layout.json": "8cea7dce3f6bfc7e54acd5f1ac62a08c9303f35ae15e46ce309ea245957c911a",
+  "stop_staring/experiments/pixel_pivot/pixel_arena.tscn": "6a3035494e007956f915d1a28758fe35222d2fad476289ca06e1f2cd163edb28",
+  "stop_staring/experiments/pixel_pivot/pixel_pivot.tscn": "1aea0d246931122c6a519fa447fcb809153df24d6181e46776fb53ef299c7f9d"
+}

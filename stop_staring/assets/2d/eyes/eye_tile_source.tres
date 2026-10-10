@@ -1,0 +1,15 @@
+[gd_resource type="TileSetScenesCollectionSource" format=3]
+
+[ext_resource type="PackedScene" path="res://assets/2d/eyes/eye_look_center.tscn" id="1_io78d"]
+[ext_resource type="PackedScene" path="res://assets/2d/eyes/eye_blink.tscn" id="2_ch8di"]
+[ext_resource type="PackedScene" path="res://assets/2d/eyes/eye_closed.tscn" id="3_v8ciu"]
+[ext_resource type="PackedScene" path="res://assets/2d/eyes/eye_empty_socket.tscn" id="4_oguwc"]
+[ext_resource type="PackedScene" path="res://assets/2d/eyes/eye_hurt.tscn" id="5_wrkd3"]
+
+[resource]
+resource_name = "Wall Eyes 32px"
+scenes/0/scene = ExtResource("1_io78d")
+scenes/1/scene = ExtResource("2_ch8di")
+scenes/2/scene = ExtResource("3_v8ciu")
+scenes/3/scene = ExtResource("4_oguwc")
+scenes/4/scene = ExtResource("5_wrkd3")

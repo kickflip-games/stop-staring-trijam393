@@ -1,2 +1,7 @@
 # Normalize EOL for all files that Git considers text files.
 * text=auto eol=lf
+
+# Preserve original third-party document bytes and whitespace.
+assets/ui/fonts/OFL.txt -text -eol whitespace=-blank-at-eol
+assets/ui/fonts/FONTLOG.txt -text -eol whitespace=-blank-at-eol
+assets/ui/kenney/License.txt -text -eol whitespace=-blank-at-eol

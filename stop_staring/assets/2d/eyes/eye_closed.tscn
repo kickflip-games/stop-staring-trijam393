@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="SpriteFrames" path="res://assets/2d/eyes/eye_sprites.tres" id="1_s2iec"]
+
+[node name="Eye_closed" type="Node2D" unique_id=1131342670]
+texture_filter = 1
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=2142390844]
+position = Vector2(8, 8)
+scale = Vector2(0.10666667, 0.10526316)
+sprite_frames = ExtResource("1_s2iec")
+animation = &"closed"
+autoplay = "closed"

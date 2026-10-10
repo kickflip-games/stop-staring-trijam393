@@ -1,0 +1,246 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/home_screen.gd" id="1_home"]
+[ext_resource type="Theme" path="res://ui/home_theme.tres" id="2_theme"]
+[ext_resource type="Script" path="res://ui/home_art.gd" id="3_art"]
+[ext_resource type="SpriteFrames" path="res://assets/2d/dungeon_crawler/dungeon_sprites.tres" id="4_sprites"]
+
+[node name="HomeScreen" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_home")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.03529412, 0.050980393, 0.09019608, 1)
+
+[node name="View" type="SubViewportContainer" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_right = 448.0
+offset_bottom = 384.0
+
+[node name="World" type="SubViewport" parent="View"]
+disable_3d = true
+canvas_item_default_texture_filter = 0
+size = Vector2i(448, 384)
+render_target_update_mode = 4
+
+[node name="Menu" type="Control" parent="View/World"]
+texture_filter = 1
+layout_mode = 0
+offset_right = 448.0
+offset_bottom = 384.0
+mouse_filter = 2
+theme = ExtResource("2_theme")
+
+[node name="Background" type="ColorRect" parent="View/World/Menu"]
+layout_mode = 0
+offset_right = 448.0
+offset_bottom = 384.0
+mouse_filter = 2
+color = Color(0.055, 0.075, 0.115, 1)
+
+[node name="DungeonArt" type="Node2D" parent="View/World/Menu"]
+script = ExtResource("3_art")
+
+[node name="Slime" type="AnimatedSprite2D" parent="View/World/Menu/DungeonArt"]
+self_modulate = Color(1.12, 1.35, 1.12, 1)
+position = Vector2(224, 220)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("4_sprites")
+animation = &"slime_idle"
+autoplay = "slime_idle"
+
+[node name="TorchLeft" type="AnimatedSprite2D" parent="View/World/Menu/DungeonArt"]
+position = Vector2(80, 184)
+sprite_frames = ExtResource("4_sprites")
+animation = &"torch"
+autoplay = "torch"
+
+[node name="TorchRight" type="AnimatedSprite2D" parent="View/World/Menu/DungeonArt"]
+position = Vector2(368, 184)
+sprite_frames = ExtResource("4_sprites")
+animation = &"torch"
+autoplay = "torch"
+
+[node name="Eyebrow" type="Label" parent="View/World/Menu"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 34.0
+offset_right = 408.0
+offset_bottom = 46.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.61, 0.69, 0.81, 1)
+text = "A SLINGSHOT ARCADE"
+horizontal_alignment = 1
+
+[node name="TitleStop" type="Label" parent="View/World/Menu"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 58.0
+offset_right = 408.0
+offset_bottom = 100.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.62, 0.93, 0.69, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 32
+text = "STOP"
+horizontal_alignment = 1
+
+[node name="TitleStaring" type="Label" parent="View/World/Menu"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 102.0
+offset_right = 408.0
+offset_bottom = 144.0
+mouse_filter = 2
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 32
+text = "STARING"
+horizontal_alignment = 1
+
+[node name="Play" type="Button" parent="View/World/Menu"]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 268.0
+offset_right = 336.0
+offset_bottom = 302.0
+theme_type_variation = &"PrimaryButton"
+theme_override_font_sizes/font_size = 16
+focus_neighbor_top = NodePath("../HowToPlay")
+focus_neighbor_bottom = NodePath("../HowToPlay")
+text = "PLAY"
+
+[node name="HowToPlay" type="Button" parent="View/World/Menu"]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 314.0
+offset_right = 304.0
+offset_bottom = 338.0
+focus_neighbor_top = NodePath("../Play")
+focus_neighbor_bottom = NodePath("../Play")
+text = "HOW TO PLAY"
+
+[node name="Footer" type="Label" parent="View/World/Menu"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 352.0
+offset_right = 416.0
+offset_bottom = 364.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.61, 0.69, 0.81, 1)
+text = "16 EYES  /  60s EACH"
+horizontal_alignment = 1
+
+[node name="Guide" type="ColorRect" parent="View/World/Menu"]
+visible = false
+layout_mode = 0
+offset_right = 448.0
+offset_bottom = 384.0
+color = Color(0.02, 0.03, 0.05, 0.94)
+
+[node name="Panel" type="Panel" parent="View/World/Menu/Guide"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 48.0
+offset_right = 408.0
+offset_bottom = 344.0
+
+[node name="Title" type="Label" parent="View/World/Menu/Guide/Panel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 20.0
+offset_right = 352.0
+offset_bottom = 44.0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 16
+text = "HOW TO PLAY"
+horizontal_alignment = 1
+
+[node name="StepOne" type="Label" parent="View/World/Menu/Guide/Panel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 66.0
+offset_right = 344.0
+offset_bottom = 80.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.62, 0.93, 0.69, 1)
+text = "01  PULL BACK"
+
+[node name="Drag" type="Label" parent="View/World/Menu/Guide/Panel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 84.0
+offset_right = 344.0
+offset_bottom = 110.0
+mouse_filter = 2
+text = "HOLD LEFT MOUSE. DRAG OPPOSITE\nTHE DIRECTION YOU WANT TO GO."
+
+[node name="StepTwo" type="Label" parent="View/World/Menu/Guide/Panel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 126.0
+offset_right = 344.0
+offset_bottom = 140.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.62, 0.93, 0.69, 1)
+text = "02  RELEASE + RICOCHET"
+
+[node name="Release" type="Label" parent="View/World/Menu/Guide/Panel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 144.0
+offset_right = 344.0
+offset_bottom = 170.0
+mouse_filter = 2
+text = "BANK OFF WALLS. HIT EYES HEAD-ON.\nDRAG AGAIN TO RE-AIM IN FLIGHT."
+
+[node name="StepThree" type="Label" parent="View/World/Menu/Guide/Panel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 186.0
+offset_right = 344.0
+offset_bottom = 200.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.62, 0.93, 0.69, 1)
+text = "03  CLOSE ALL 16 EYES"
+
+[node name="Goal" type="Label" parent="View/World/Menu/Guide/Panel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 204.0
+offset_right = 344.0
+offset_bottom = 230.0
+mouse_filter = 2
+text = "EACH EYE STAYS CLOSED FOR 60s.\nCLOSE ALL AT THE SAME TIME."
+
+[node name="Shortcuts" type="Label" parent="View/World/Menu/Guide/Panel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 240.0
+offset_right = 352.0
+offset_bottom = 252.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.61, 0.69, 0.81, 1)
+text = "R RETRY     P / ESC PAUSE"
+horizontal_alignment = 1
+
+[node name="Back" type="Button" parent="View/World/Menu/Guide/Panel"]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 264.0
+offset_right = 272.0
+offset_bottom = 284.0
+text = "GOT IT"

@@ -1,0 +1,27 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://experiments/pixel_pivot/slime.gd" id="1_hi0ep"]
+[ext_resource type="SpriteFrames" path="res://assets/2d/dungeon_crawler/dungeon_sprites.tres" id="2_csxbl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tcnng"]
+radius = 5.0
+
+[node name="Slime" type="CharacterBody2D" unique_id=223464955]
+z_index = 5
+texture_filter = 1
+collision_layer = 2
+motion_mode = 1
+script = ExtResource("1_hi0ep")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1076416378]
+shape = SubResource("CircleShape2D_tcnng")
+
+[node name="Visual" type="Node2D" parent="." unique_id=847962932]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Visual" unique_id=1478391330]
+self_modulate = Color(1.12, 1.35, 1.12, 1)
+position = Vector2(0, -4)
+scale = Vector2(1.5, 1.5)
+sprite_frames = ExtResource("2_csxbl")
+animation = &"slime_idle"
+autoplay = "slime_idle"

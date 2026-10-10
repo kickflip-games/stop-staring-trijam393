@@ -1,0 +1,38 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://experiments/pixel_pivot/eye.gd" id="1_fw8sr"]
+[ext_resource type="Texture2D" path="res://assets/2d/eyes/empty_socket.tres" id="2_f6v55"]
+[ext_resource type="Texture2D" path="res://experiments/pixel_pivot/art/eyeball.svg" id="3_ospcl"]
+[ext_resource type="Texture2D" path="res://experiments/pixel_pivot/art/pupil.svg" id="4_fwyqw"]
+[ext_resource type="Texture2D" path="res://assets/2d/eyes/eyes_sheet_v2.png" id="5_a5lc0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gc0y5"]
+atlas = ExtResource("5_a5lc0")
+region = Rect2(412, 692, 300, 304)
+filter_clip = true
+
+[node name="WallEye" type="Node2D" unique_id=1686647045]
+z_index = 4
+texture_filter = 1
+script = ExtResource("1_fw8sr")
+
+[node name="Visual" type="Node2D" parent="." unique_id=557071691]
+scale = Vector2(0.75, 0.75)
+
+[node name="Socket" type="Sprite2D" parent="Visual" unique_id=768746937]
+self_modulate = Color(0.8, 0.9, 1, 1)
+scale = Vector2(0.10666667, 0.10526316)
+texture = ExtResource("2_f6v55")
+
+[node name="Eyeball" type="Node2D" parent="Visual" unique_id=5317633]
+
+[node name="White" type="Sprite2D" parent="Visual/Eyeball" unique_id=1839518380]
+texture = ExtResource("3_ospcl")
+
+[node name="Pupil" type="Sprite2D" parent="Visual/Eyeball" unique_id=914558751]
+texture = ExtResource("4_fwyqw")
+
+[node name="Closed" type="Sprite2D" parent="Visual" unique_id=652481383]
+visible = false
+scale = Vector2(0.10666667, 0.10526316)
+texture = SubResource("AtlasTexture_gc0y5")

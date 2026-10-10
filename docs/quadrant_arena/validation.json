@@ -1,0 +1,167 @@
+{
+  "arena_pixels": [
+    448,
+    336
+  ],
+  "play_floor_bounds": [
+    32,
+    64,
+    384,
+    240
+  ],
+  "spawn": [
+    224,
+    184
+  ],
+  "island_rects_pixels": {
+    "UpperLeft": [
+      96,
+      112,
+      64,
+      48
+    ],
+    "UpperRight": [
+      288,
+      112,
+      64,
+      48
+    ],
+    "LowerLeft": [
+      96,
+      208,
+      64,
+      48
+    ],
+    "LowerRight": [
+      288,
+      208,
+      64,
+      48
+    ]
+  },
+  "eye_distribution": {
+    "top": 3,
+    "bottom": 3,
+    "left": 3,
+    "right": 3,
+    "islands": 4,
+    "total": 16
+  },
+  "lane_widths_pixels": {
+    "central_vertical": 128,
+    "central_horizontal": 48,
+    "left_right_outer": 64,
+    "top_bottom_outer": 48
+  },
+  "previous_internal_wall_tiles": 98,
+  "current_internal_wall_tiles": 48,
+  "previous_floor_tiles": 262,
+  "current_floor_tiles": 312,
+  "prop_changes": {
+    "barrels_before": 10,
+    "barrels_after": 4,
+    "crates_before": 2,
+    "crates_after": 0,
+    "torches": 6,
+    "gate": 1,
+    "banner": 1
+  },
+  "validation": {
+    "baseline_native": {
+      "checks": 2366,
+      "failures": 0
+    },
+    "current_headless": {
+      "checks": 2428,
+      "failures": 0
+    },
+    "current_native": {
+      "checks": 2432,
+      "failures": 0
+    },
+    "independent_eyes_headless": {
+      "checks": 230,
+      "failures": 0
+    },
+    "movement": {
+      "launches": 4,
+      "bounces": 10,
+      "closed_eyes": 3,
+      "frames": 481,
+      "fps": 60
+    },
+    "independent_eyes_native": {
+      "checks": 243,
+      "failures": 0
+    }
+  },
+  "unchanged_from_task_start_sha256": {
+    "stop_staring/experiments/pixel_pivot/hud.gd": "672eca7a3be090bfc445476fff8cf98d9292f1cd68c76cd889f632894c7c9fa1",
+    "stop_staring/experiments/pixel_pivot/presentation.gd": "61ecc4e6169bbd50f7c08bfb40dbf34e301e8fd87661e6c7d77bc0255c693520",
+    "stop_staring/experiments/pixel_pivot/arena.gd.uid": "1af1b933757b4496aeb510fdf84e7f5d9c7cda55a9c3181b4fd94782d4aec135",
+    "stop_staring/experiments/pixel_pivot/camera.gd": "a62d7380e908b016ed4849fbc3d22104cd17ce0e6ae9c1fde516a0289f82c74e",
+    "stop_staring/experiments/pixel_pivot/juice_screen.gdshader": "f80b5bc8a6a03a4448728aa01544a47c62a5bb2d73bb4dd918aecde0d430344e",
+    "stop_staring/experiments/pixel_pivot/juice_screen.gdshader.uid": "376dd02461faf442ede16318645b978dcd35f3fc63abbe920b16b660a3124c67",
+    "stop_staring/experiments/pixel_pivot/arena.gd": "7319bce0038c1ffc9c86f45b860582684d0e0d9d36996bc1d1783dca573d43de",
+    "stop_staring/experiments/pixel_pivot/slime.gd": "8e7793562f04b0af0269880917f0c06e11698bcd78ca0e16947de0a5215c44ba",
+    "stop_staring/experiments/pixel_pivot/pixel_pivot.tscn": "1aea0d246931122c6a519fa447fcb809153df24d6181e46776fb53ef299c7f9d",
+    "stop_staring/experiments/pixel_pivot/hud.gd.uid": "7096d9717bc41ffac262005eeae32c3795f3f499ad709292587a8b225832597d",
+    "stop_staring/experiments/pixel_pivot/eye.gd.uid": "86bbfb4f9397783165c72e0279e15896d0300880af714f04c1142a111dd953f4",
+    "stop_staring/experiments/pixel_pivot/art_patch.tscn": "ae3b50284c018ccf7af7ead8652c80f1befcf22d30a9c93fd58ebcbd781d1be8",
+    "stop_staring/experiments/pixel_pivot/effects.gd": "0ad2f1fe595773de6052701b7ba5fdc5cd529cbd9b4b856a6012a0fff6447f12",
+    "stop_staring/experiments/pixel_pivot/effects.gd.uid": "60d782b945fdc88c8b040fb31376dab409a7512a2d6d03d2e4d59bb5aeed5207",
+    "stop_staring/experiments/pixel_pivot/camera.gd.uid": "75e5579aa9f3a0dd73aef287acfcb05700c22c179470f5fe08b5fba17aa1a5fb",
+    "stop_staring/experiments/pixel_pivot/wall_eye.tscn": "3ce1e918d2f346ef1332569afb33454a585c8af6546e4d7c80d611b6a831835c",
+    "stop_staring/experiments/pixel_pivot/presentation.gd.uid": "8cc51fdb34609619456239f073ebea75022399c4ad82d3341ca421cf3a258a39",
+    "stop_staring/experiments/pixel_pivot/clock.gd.uid": "09f8f50af3e67aa1a6f0b68cf339a1c75e2239d445281c71d4c1fd2f097edb8c",
+    "stop_staring/experiments/pixel_pivot/slime.tscn": "6ffa85d4c2aec3373e4924c2b85dabcb527a96dcb65702dcd28e5f8e5915c920",
+    "stop_staring/experiments/pixel_pivot/slime.gd.uid": "e3dac599b08cf3ed56a5d6a5b93616229371d11aa5233a2a2a2d0959a41f70b1",
+    "stop_staring/experiments/pixel_pivot/clock.gd": "af2c228625e5d09a8263711fabae4ed0a25d98f922545a5d27c93d849b527632",
+    "stop_staring/ui/home_screen.gd.uid": "5e212968e642cad8d7811955d48e324570465f229bc23186ab99f9cb3c774901",
+    "stop_staring/ui/home_screen.gd": "d3457531f4f39d4b2a64a971c8d4ecf1febfa512459fa25f1954c67ef4200709",
+    "stop_staring/ui/home_art.gd.uid": "1a648b47f062e7819bd0b3d515854222f11bf0a45c2a178bdcf122f2da6c1c76",
+    "stop_staring/ui/home_screen.tscn": "71b516099b036c5a3e44194659990e51fa8276be96947941b36c65ef7c5b7945",
+    "stop_staring/ui/home_art.gd": "d2390bb310ed3beb394820be7e59305ce40651734abe8fa6250f0fd8cc0a4906",
+    "stop_staring/ui/retro_theme.tres": "805c388c09b40d6573236071c1883dd57b9c97ca54b721fbdd8700ed5959966a",
+    "stop_staring/ui/home_theme.tres": "32dee80b4b2df8983afbef426bee48fb18effb39af5b3fb7f5aa1c801fa757ce",
+    "stop_staring/ui/retro_hud.tscn": "6ccfc745bf14fb8990fb820378fa8d8bd34572fba49ae770eae8a1ef04f897bf",
+    "stop_staring/assets/2d/.DS_Store": "88062a9da55ba4fb7f61c1f2591cb1a0b2a5d9c068c73f22d97ecb8cb734cd32",
+    "stop_staring/assets/2d/dungeon_crawler/full_spritesheet.png": "2c3417ec1fd6441dcdc40d78495132ad9ebbde6c5b4d0bb4dcb36201d001ce8e",
+    "stop_staring/assets/2d/dungeon_crawler/full_tilemap.png.import": "07b0bc67f39c06675ac955bb3527dc0f20eaf84527220d4ad9739d696947b547",
+    "stop_staring/assets/2d/dungeon_crawler/full_spritesheet.png.import": "43c975c1d3005644567b009960ba9b7425ac5a7d57328abc1d2041264a395743",
+    "stop_staring/assets/2d/dungeon_crawler/credits.txt": "eb3a338d3bfce624015850b9896169d68c244232f829ed206b1eb86f55ff0586",
+    "stop_staring/assets/2d/dungeon_crawler/README.md": "d34fad764c9995b78cb28ca582518f8a26f488b0c21ba448f256d9493e001f58",
+    "stop_staring/assets/2d/dungeon_crawler/full_tilemap.png": "677e8effc736c567ad00d203d33fea3d51963dcc5c10808573c7ff579999b5d9",
+    "stop_staring/assets/2d/dungeon_crawler/dungeon_sprites.tres": "d0a620affe78d6401819fb2a71c829ae74ed0ccbbff58503e75ac27e1285dcfc",
+    "stop_staring/assets/2d/dungeon_crawler/atlas_catalog.json": "c938e4fb133fab95110825511f35cd719b9493b650e60cb2c5bd58eac055ae16",
+    "stop_staring/assets/2d/dungeon_crawler/dungeon_tileset.tres": "04b9e52ede2c98abade7a156ca357fa382ce0be13b952fb2475a752f05371415",
+    "stop_staring/assets/2d/eyes/eye_tile_source.tres": "c173ef833f558063a8fc5c577046cda1089d39bfa7e187d9b991382b51de6694",
+    "stop_staring/assets/2d/eyes/eyes_sheet.png.import": "eca9f1fc6ed9aec4165f1057fda5e0f98580c244cd771025858dd1683efc288c",
+    "stop_staring/assets/2d/eyes/eye_sprites.tres": "08027d3dab44f5af936115e4b313b3e635700d378a46de2698b7cef13e99b726",
+    "stop_staring/assets/2d/eyes/eye_empty_socket.tscn": "eb69c8802892e851c85bd6b1a3ba2b760c72a67797ace612315ac22943f17c47",
+    "stop_staring/assets/2d/eyes/eyes_sheet_v2.png": "f8faa75d43998ae4c2a56b16859d40f6cd3f46aa47786b9d2a9b9c92fb46944b",
+    "stop_staring/assets/2d/eyes/eye_closed.tscn": "c5f735ca87756a8bc2d5a6f6c508c63bf2cd21aef5cade56e71ba6762f5a9e37",
+    "stop_staring/assets/2d/eyes/eyes_sheet.png": "6672f3c8ada3bab601c6b2b2c2ed3a16750fd7d68625845d7a0bf29e6e15f877",
+    "stop_staring/assets/2d/eyes/README.md": "8019105be1094a7f96463de2978edef98c5a0f6f0a9e77c6654683635156aa80",
+    "stop_staring/assets/2d/eyes/empty_socket.tres": "1dc86affdf64d1dc503d00eadb9970c31c050f16d25ce71a7469f52c2a4d493e",
+    "stop_staring/assets/2d/eyes/eyes_sheet_v2.png.import": "46a2c457bdfd1dd52f6768e7b0fa9f14db14b31cdb0b5ab5df03bb0bfaeaab86",
+    "stop_staring/assets/2d/eyes/eye_hurt.tscn": "f184a958d983cbf745eb4c3358dbd562d088ad80e866f3f65df47753aa9cb005",
+    "stop_staring/assets/2d/eyes/eye_blink.tscn": "4e03b58c02496e2a1426dbede6c658521e7b0d502410f878d63862b6ebf1a641",
+    "stop_staring/assets/2d/eyes/eye_look_center.tscn": "f0c82b8e47670fb2fabb555cf998357fdd2d3f1730ca479e034f27896f967e5c",
+    "stop_staring/assets/2d/eyes/eye_regions.json": "148f41f26378ab6ead47603c50b301db8356738acef85197c251213408598d00",
+    "tools/build_pixel_pivot.gd": "44f5df8a510079851fe8e6080c45cafcd8f45fd2a9a600a9a50a457a837fa5e1",
+    "stop_staring/project.godot": "7d6a371cb61e426f70e8d6730b4dac6c5146328dd17720e94b7ddaa73d68018e"
+  },
+  "changed_since_task_start": [
+    "stop_staring/experiments/pixel_pivot/pixel_arena.tscn",
+    "stop_staring/experiments/pixel_pivot/README.md",
+    "stop_staring/experiments/pixel_pivot/layout.json",
+    "stop_staring/experiments/pixel_pivot/eye.gd",
+    "stop_staring/experiments/pixel_pivot/gaze_cone.gd",
+    "README.md"
+  ],
+  "concurrent_changes_not_made_by_layout_task": [
+    "eye.gd gaze_opacity 0.13 -> 0.18; retained.",
+    "gaze_cone.gd batches its existing triangle drawing into one cached draw command; retained."
+  ]
+}

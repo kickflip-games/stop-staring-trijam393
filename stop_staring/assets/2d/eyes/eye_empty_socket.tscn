@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="SpriteFrames" path="res://assets/2d/eyes/eye_sprites.tres" id="1_4ftn0"]
+
+[node name="Eye_empty_socket" type="Node2D" unique_id=1725658010]
+texture_filter = 1
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1260542344]
+position = Vector2(8, 8)
+scale = Vector2(0.10666667, 0.10526316)
+sprite_frames = ExtResource("1_4ftn0")
+animation = &"empty_socket"
+autoplay = "empty_socket"

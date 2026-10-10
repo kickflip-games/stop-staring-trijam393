@@ -1,6 +1,5 @@
-These five wall impact clips are from Kenney Impact Sounds. See License.txt.
+# Wall impact audio
 
-`Player/WallHitAudio` selects clips randomly without immediate repeats,
-with slight pitch and volume variation. Adjust its `volume_db` to tune the mix.
-Only incoming collisions with the `walls` group trigger playback; corner
-contacts are limited to one sound per physics step.
+`impactSoft_heavy_002.ogg` is from Kenney Impact Sounds. See `License.txt`.
+The current 2D Effects node plays this soft thud on wall collisions, with
+slight pitch variation. Its short cooldown limits repeated contact sounds.
