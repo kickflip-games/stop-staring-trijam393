@@ -1,6 +1,8 @@
 extends CharacterBody3D
 ## Slingshot input on the XY plane. Release replaces the current velocity.
 
+signal wall_bounced(contact: Vector3, normal: Vector3, impact_speed: float)
+
 @export_range(0.5, 6.0, 0.1) var max_drag_distance: float = 3.0
 @export_range(0.01, 0.5, 0.01) var drag_deadzone: float = 0.12
 @export_range(1.0, 30.0, 0.5) var min_launch_speed: float = 4.0
@@ -38,6 +40,7 @@ func _physics_process(delta: float) -> void:
 		if velocity.dot(normal) < -0.000001:
 			if not played_wall_sound and collision.get_collider().is_in_group("walls"):
 				$WallHitAudio.play()
+				wall_bounced.emit(collision.get_position(), normal, -velocity.dot(normal))
 				played_wall_sound = true
 			velocity = velocity.bounce(normal) * bounce_retention
 		if velocity.length() < settle_speed:

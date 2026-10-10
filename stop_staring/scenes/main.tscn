@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3]
+[gd_scene load_steps=21 format=3]
 
 [ext_resource type="Script" path="res://scripts/blob.gd" id="1_blob"]
 [ext_resource type="Script" path="res://scripts/aim_indicator.gd" id="2_aim"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" path="res://audio/wall_hits/impactSoft_heavy_003.ogg" id="6_hit"]
 [ext_resource type="AudioStream" path="res://audio/wall_hits/impactSoft_heavy_004.ogg" id="7_hit"]
 [ext_resource type="AudioStream" path="res://audio/aim/stretch.mp3" id="8_stretch"]
+[ext_resource type="Script" path="res://scripts/wall_dust.gd" id="9_dust"]
 
 [sub_resource type="AudioStreamRandomizer" id="WallHitRandomizer"]
 random_pitch = 1.08
@@ -58,6 +59,9 @@ height = 0.9
 radius = 0.45
 
 [node name="Main" type="Node3D"]
+
+[node name="WallDust" type="Node3D" parent="."]
+script = ExtResource("9_dust")
 
 [node name="Arena" type="Node3D" parent="."]
 
@@ -138,3 +142,5 @@ light_energy = 0.4
 
 [node name="AimIndicator" type="Node2D" parent="HUD"]
 script = ExtResource("2_aim")
+
+[connection signal="wall_bounced" from="Player" to="WallDust" method="burst"]
