@@ -4,10 +4,25 @@
 
 Godot 4.8dev6
 
+## Menu and levels
+
+Press F5 for the Kickflip splash and title menu. Start begins room 1;
+Level Select opens any of the three rooms. Pop every eye to clear a room
+and advance. R retries the current room; Escape returns to the menu.
+Retry resets the timer and all targets.
+
+`scenes/game.tscn` owns navigation. `scripts/game.gd` defines three layouts
+with 1, 3, and 6 eyes and reuses `scenes/main.tscn` for each room.
+These are prototype layouts; difficulty and movement feel still need playtesting.
+
+```bash
+godot --headless --path stop_staring --script res://tests/menu_levels.gd
+```
+
 ## Graybox prototype
 
-Open `stop_staring/project.godot` and press F6 on `scenes/main.tscn`, or F5
-to run the project. The main scene contains an orthographic view of an 18 × 10
+Open `stop_staring/project.godot` and press F6 on `scenes/main.tscn`
+to run the arena directly. The gameplay scene contains an orthographic view of an 18 × 10
 unit arena, four static collision walls, and a mint sphere placeholder.
 Gameplay uses XY with Z fixed at zero. Hold the mouse or a finger anywhere,
 drag back opposite the desired
