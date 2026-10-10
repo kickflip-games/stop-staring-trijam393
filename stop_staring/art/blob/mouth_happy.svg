@@ -1,5 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
-  <defs><clipPath id="mouth"><path d="M52 91 C52 72 67 69 88 79 Q128 97 168 79 C189 69 204 72 204 91 C205 153 181 196 128 199 C75 196 51 153 52 91Z"/></clipPath></defs>
-  <path d="M52 91 C52 72 67 69 88 79 Q128 97 168 79 C189 69 204 72 204 91 C205 153 181 196 128 199 C75 196 51 153 52 91Z" fill="#281B27"/>
-  <g clip-path="url(#mouth)"><ellipse cx="130" cy="192" rx="49" ry="37" fill="#F56A9B"/><path d="M106 164 Q130 155 153 168" fill="none" stroke="#F8A5C0" stroke-width="8" stroke-linecap="round"/></g>
-</svg>

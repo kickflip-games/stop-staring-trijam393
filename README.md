@@ -1,6 +1,64 @@
 # stop-staring-trijam393
 
-Godot 4.8.dev6. The project is in `stop_staring/`.
+A 2D slingshot arcade game made with Godot 4.8.dev6. The project is in
+`stop_staring/`.
+
+## Play
+
+Open `stop_staring/project.godot` and press **F5**. The pixel-art home screen
+opens first; select **Play** to enter the 28 × 21 tile dungeon view with
+six open alcoves and sixteen tracking wall eyes. Pull back and release to launch; re-aim while
+moving, bank off walls, and keep every eye closed at the same time. Each eye reopens after 20 seconds. **R** retries; **P** or **Escape**
+pauses. **How to Play** explains the launch and independent eye timers; **Home** in the
+pause or clear panel returns to the title screen.
+
+The editable home scene is `stop_staring/ui/home_screen.tscn`. It reuses the
+game's dungeon tiles, animated slime and torches, wall-eye layers and pixel
+font, at the same integer viewport scales. See
+[home screen captures](docs/home_screen/README.md).
+
+[Independent eye timers](docs/independent_eyes/README.md) describes the current
+20-second closure rule, simultaneous win condition, HUD and validation.
+
+See [gameplay documentation](stop_staring/experiments/pixel_pivot/README.md)
+for controls, scene rebuilding, atlas coordinates, tuning and validation.
+[2D captures](docs/pixel_pivot/README.md) retain the room screenshots,
+art checkpoint and movement recording.
+
+[Reference arena](docs/reference_arena/README.md) records the current symmetric
+six-alcove map, all sixteen eyes, collision reachability and runtime captures.
+[Earlier composition pass](docs/composition_polish/README.md) retains the previous
+asymmetric map checkpoint.
+
+[Retro UI preview](docs/retro_ui/README.md) shows the pixel font, brass HUD,
+pause and clear panels at 1×, 2× and 3×. The editable UI scene is
+`stop_staring/ui/retro_hud.tscn` with its shared `retro_theme.tres`.
+
+## Attribution
+
+[Credits](stop_staring/CREDITS.md) records the supplied music attribution
+and Uppbeat license code, o_lobster's dungeon art, Kenney's Fantasy UI
+Borders and Impact Sounds, the Press Start 2P font, plus outstanding
+provenance for supplied assets. Arcade Ride loops from the main menu through
+gameplay and follows the gameplay slowdown. The menu silently renders the room
+and plays its effect cues before enabling Play to warm graphics and audio.
+[Asset provenance](docs/third_party_assets.md) records
+local paths and usage.
+
+## Checks
+
+[Action feedback preview](docs/juice/gallery.html) shows the charge, launch,
+eye-hit, synchronized reopen and final-hit/win polish, with a short native
+video and matched captures. [Implementation notes](docs/juice/README.md)
+record tuning and validation. Run the feedback fixture with
+`res://experiments/pixel_pivot/tests/juice.gd`.
+
+```bash
+godot --headless --path stop_staring --script res://experiments/pixel_pivot/tests/regression.gd
+```
+
+Set the executable path explicitly if Godot is not on your PATH; the
+installed runtime path is documented in the gameplay README.
 
 ## 2D tilesheet setup
 
@@ -9,78 +67,13 @@ The supplied dungeon sheets are saved and configured in
 `stop_staring/scenes/2d/dungeon_tiles_preview.tscn` and press **F6** for the
 editable room and animation preview. The shared TileSet provides a 16 × 16
 grid with wall collisions; the SpriteFrames resource provides 17 animations.
-See the asset folder's README for atlas IDs and usage. This is the first
-asset setup step for the proposed 2D conversion.
-
-## Menu and levels
-
-Press F5 for the Kickflip splash and title menu. Start begins room 1;
-Level Select opens any of the three rooms. Pop every eye to clear a room
-and advance. R retries the current room; Escape returns to the menu.
-Retry resets the timer and all targets. Navigation uses EasyTransition's
-black fade: 0.25 seconds to cover and 0.25 seconds to uncover. Gameplay
-input and its timer pause through the transition.
-
-`scenes/game.tscn` owns navigation. `scripts/game.gd` defines three layouts
-with 1, 3, and 6 eyes and reuses `scenes/main.tscn` for each room.
-These are prototype layouts; difficulty and movement feel still need playtesting.
-
-```bash
-godot --headless --path stop_staring --script res://tests/menu_levels.gd
-```
-
-## Graybox prototype
-
-Open `stop_staring/project.godot` and press F6 on `scenes/main.tscn`
-to run the arena directly. The gameplay scene contains an orthographic view of an 18 × 10
-unit arena, four static collision walls, and a mint sphere placeholder.
-Gameplay uses XY with Z fixed at zero. Hold the mouse or a finger anywhere,
-drag back opposite the desired
-direction, and release to fling. The arrow shows direction and strength.
-Tiny drags cancel; long drags cap at maximum strength. Release replaces the
-current velocity, and losing focus cancels an unfinished gesture.
-
-Select `Player` in the main scene to tune maximum drag distance, deadzone,
-and minimum/maximum launch speed, bounce retention, movement damping,
-and settling speed. The sphere uses swept collision movement and reflects
-velocity from wall normals, retaining 90% speed per hit by default.
-Exponential damping slows it over time; below 0.35 units/second it settles.
-The dotted aim preview shows up to 0.8 seconds of travel, stopping at the
-first sphere-wall contact. Tune its duration on `HUD/AimIndicator`.
-
-Run the input and ricochet checks with your Godot executable:
-
-```bash
-godot --headless --path stop_staring --script res://tests/launch_controls.gd
-godot --headless --path stop_staring --script res://tests/ricochets.gd
-godot --headless --path stop_staring --script res://tests/wall_eye.gd
-```
-
-## Wall-eye prototype (issue #6)
-
-One googly eye sits inset into the top wall. Its pupil follows the player,
-with a bounded spring response to ricochets. Fling into the eye to pop it;
-an empty socket remains and the HUD updates the remaining count. Reload
-the scene to try again. A hit requires at least 3 units/second **into the
-wall**, so a fast, shallow graze does not count.
-
-`scenes/eye.tscn` is reusable: place its XY origin on the arena-facing wall
-surface, put Z slightly in front of the wall mesh (1.06 here), and point
-local -Y into the arena. For example, rotate Z by -90 degrees on the right
-wall. Set its `player_path` and `wall_path`; tune `hit_radius`,
-`min_impact_speed`, and `tracking_limit` in the inspector. Keep the pupil
-limit at or below 0.35 to retain it inside the supplied sclera.
-
-The eye uses the player's swept `wall_contact` signal rather than an
-overlap trigger. Every incoming wall contact reports its normal speed,
-including multiple ricochets within a physics step. The level connects
-each eye's one-shot `popped` signal and emits `remaining_eyes_changed` and
-`all_eyes_popped`. Walls retain their existing collision and bounce behavior.
-
-Run `wall_eye.gd` without `--headless` to also save tracking and popped
-runtime screenshots to `/tmp/stop-staring-eye-{tracking,popped}.png`.
+The replacement eye sheet is configured under `stop_staring/assets/2d/eyes/`
+and adds five scene tiles as source 2 in the same TileSet. See the asset
+folders' READMEs for atlas IDs and usage, and `docs/third_party_assets.md`
+for provenance.
 
 ## Publish to itch.io
+
 
 `publish.sh` exports a single-threaded Web build and uploads it to
 `avivajpeyi/stop-staring:html5`.
@@ -97,7 +90,9 @@ From this repository:
 ./publish.sh               # Export and upload
 ```
 
-Outputs: `build/web/index.html` and `build/stop-staring-web.zip`.
+Outputs: `build/web/index.html`, `build/web/CREDITS.md` and
+`build/stop-staring-web.zip`. Credits and bundled attribution files are
+included in the export; local editor tooling is excluded.
 Import/export logs and an isolated project copy are also under `build/`.
 
 Set `GODOT_BIN` (or `GODOT`), `BUTLER`, or `ITCH_TARGET` to override defaults.

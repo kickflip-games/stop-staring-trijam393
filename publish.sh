@@ -68,6 +68,7 @@ find build/web -maxdepth 1 -type f -delete
 rsync -a --delete --delete-excluded \
     --exclude '.git/' --exclude '.godot/' --exclude '.github/' \
     --exclude '.agents/' --exclude '.codex/' --exclude '.env*' \
+    --exclude 'addons/godot_ai/' --exclude 'addons/.godot_ai_update/' \
     --exclude 'build/' --exclude '*.sh' "$PROJECT_DIR/" build/staging/
 python3 - <<'PY'
 from pathlib import Path
@@ -75,6 +76,7 @@ import re
 project = Path('build/staging/project.godot')
 source = project.read_text()
 source = re.sub(r'^enabled=PackedStringArray\(.*\)$', 'enabled=PackedStringArray()', source, flags=re.M)
+source = re.sub(r'^_mcp_game_helper=.*\n', '', source, flags=re.M)
 if '[editor]' not in source:
     source += '\n[editor]\n\nimport/use_multiple_threads=false\n'
 else:
@@ -92,7 +94,7 @@ name="Web"
 platform="Web"
 runnable=true
 export_filter="all_resources"
-include_filter=""
+include_filter="CREDITS.md,**/License.txt,**/credits.txt,**/OFL.txt,**/FONTLOG.txt"
 exclude_filter="*.sh,README.md"
 script_export_mode=2
 [preset.0.options]
@@ -125,6 +127,10 @@ for name in ('index.html', 'index.js', 'index.wasm', 'index.pck'):
     file = Path('build/web') / name
     if not file.is_file() or file.stat().st_size == 0:
         raise SystemExit(f'Incomplete Web export: {file}')
+credits = Path('stop_staring/CREDITS.md')
+if not credits.is_file():
+    raise SystemExit('Missing asset attribution: stop_staring/CREDITS.md')
+Path('build/web/CREDITS.md').write_bytes(credits.read_bytes())
 with ZipFile('build/stop-staring-web.zip', 'w', ZIP_DEFLATED) as archive:
     for file in sorted(Path('build/web').iterdir()):
         if file.is_file():

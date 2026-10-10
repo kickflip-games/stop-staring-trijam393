@@ -1,11 +1,12 @@
-[gd_resource type="TileSet" format=3]
+[gd_resource type="TileSet" format=3 uid="uid://doti8sdgn5kcd"]
 
-[ext_resource type="Texture2D" path="res://assets/2d/dungeon_crawler/full_tilemap.png" id="1_i4til"]
-[ext_resource type="Texture2D" path="res://assets/2d/dungeon_crawler/full_spritesheet.png" id="2_n4ori"]
+[ext_resource type="Texture2D" uid="uid://bpyme4837il1g" path="res://assets/2d/dungeon_crawler/full_tilemap.png" id="1_n4ori"]
+[ext_resource type="Texture2D" uid="uid://b1qe4mcjpg7jl" path="res://assets/2d/dungeon_crawler/full_spritesheet.png" id="2_cf75d"]
+[ext_resource type="TileSetScenesCollectionSource" path="res://assets/2d/eyes/eye_tile_source.tres" id="3_86x3g"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cf75d"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i8i6t"]
 resource_name = "Environment"
-texture = ExtResource("1_i4til")
+texture = ExtResource("1_n4ori")
 0:0/0 = 0
 0:0/0/custom_data_0 = "bag_coins"
 0:0/0/custom_data_1 = "sprite"
@@ -185,9 +186,9 @@ texture = ExtResource("1_i4til")
 5:7/0/custom_data_0 = "wall_top_inner_left_2"
 5:7/0/custom_data_1 = "wall"
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_86x3g"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h4y1t"]
 resource_name = "Sprites and Effects"
-texture = ExtResource("2_n4ori")
+texture = ExtResource("2_cf75d")
 0:0/0 = 0
 0:0/0/custom_data_0 = "fly_anim_f0"
 0:0/0/custom_data_1 = "sprite"
@@ -591,5 +592,6 @@ custom_data_layer_0/name = "tile_name"
 custom_data_layer_0/type = 4
 custom_data_layer_1/name = "category"
 custom_data_layer_1/type = 4
-sources/0 = SubResource("TileSetAtlasSource_cf75d")
-sources/1 = SubResource("TileSetAtlasSource_86x3g")
+sources/0 = SubResource("TileSetAtlasSource_i8i6t")
+sources/1 = SubResource("TileSetAtlasSource_h4y1t")
+sources/2 = ExtResource("3_86x3g")

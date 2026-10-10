@@ -47,6 +47,8 @@ func _initialize() -> void:
 				polygon.append(Vector2(entry.collision[index], entry.collision[index + 1]))
 			tile.add_collision_polygon(0)
 			tile.set_collision_polygon_points(0, 0, polygon)
+	if FileAccess.file_exists("res://assets/2d/eyes/eye_tile_source.tres"):
+		tileset.add_source(load("res://assets/2d/eyes/eye_tile_source.tres"), 2)
 	if ResourceSaver.save(tileset, ASSETS + "dungeon_tileset.tres", ResourceSaver.FLAG_CHANGE_PATH) != OK:
 		quit(1)
 		return
@@ -145,6 +147,10 @@ func build_preview(tileset: TileSet, frames: SpriteFrames) -> void:
 	props.set_cell(Vector2i(11, 6), 0, Vector2i(0, 0))
 	for spec in [["LeftTorch", "torch", Vector2(72, 8)], ["RightTorch", "torch", Vector2(168, 8)], ["Slime", "slime_idle", Vector2(120, 88)], ["Goblin", "goblin_idle", Vector2(152, 56)], ["Knight", "knight_idle", Vector2(72, 88)], ["Chest", "chest_idle", Vector2(184, 40)]]:
 		animated_sprite(scene, room, frames, spec[0], spec[1], spec[2])
+	if tileset.has_source(2):
+		var eyes := layer(scene, room, "EyeArt", tileset)
+		eyes.set_cell(Vector2i(6, 0), 2, Vector2i.ZERO, 1)
+		eyes.set_cell(Vector2i(3, 0), 2, Vector2i.ZERO, 0)
 	label(scene, "PreviewCaption", "ROOM PREVIEW  /  walls have 2D collision on physics layer 1", Vector2(64, 718), 16)
 	# A separate shelf shows reusable animations without adding gameplay.
 	for index in range(8):

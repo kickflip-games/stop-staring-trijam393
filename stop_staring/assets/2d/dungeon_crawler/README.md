@@ -7,7 +7,7 @@ Both PNGs are byte-for-byte copies of the supplied files.
 Open `res://scenes/2d/dungeon_tiles_preview.tscn` and press **F6** to preview
 the tiles and animation strips. `Room/Floor`, `Room/Walls`, and `Room/Props`
 are editable TileMapLayer nodes sharing the external TileSet resource.
-This scene is the asset setup preview; gameplay conversion comes next.
+The playable experiment is `res://experiments/pixel_pivot/pixel_pivot.tscn`.
 
 ## TileSet
 
@@ -23,6 +23,11 @@ zero separation. Empty regions are excluded. Source IDs are stable:
 |---|---|---|---|
 | 0 | `full_tilemap.png` | 144 × 128 | 52 |
 | 1 | `full_spritesheet.png` | 448 × 144 | 119 |
+| 2 | `../eyes/eye_tile_source.tres` | 32 × 32 display canvas | 5 scene tiles |
+
+Source 2 adds the replacement eye sheet alongside the two dungeon atlases:
+center, blink, closed, empty socket and hurt. See the eye folder's README.
+The shared resource has 171 atlas tiles plus five scene tiles.
 
 The wide table and doorway floor occupy 2 × 1 atlas regions. Doors and
 explosions occupy 2 × 2 regions. Their texture origins align the image's
@@ -34,7 +39,9 @@ The same names and categories are exposed as TileSet custom data.
 Environment walls have rectangular collision polygons following their
 visible bounds on **2D physics layer 1**. Floors, props, sprites, and
 decorative arches have no collision. Arch passage geometry and interactive
-door collision should be authored when the 2D gameplay is built. Tiles are
+door collision should be authored for interactive doors. The experiment
+disables tile collision and uses merged wall bodies plus circular barrel
+bumpers. Tiles are
 ready for manual painting; terrain connection rules are not configured.
 
 Texture imports use lossless compression, no mipmaps, no resizing, no alpha
