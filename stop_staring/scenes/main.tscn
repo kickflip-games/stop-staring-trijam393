@@ -1,0 +1,110 @@
+[gd_scene load_steps=11 format=3]
+
+[sub_resource type="StandardMaterial3D" id="BackdropMaterial"]
+albedo_color = Color(0.12, 0.15, 0.18, 1)
+roughness = 1.0
+
+[sub_resource type="BoxMesh" id="BackdropMesh"]
+material = SubResource("BackdropMaterial")
+size = Vector3(20, 12, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="WallMaterial"]
+albedo_color = Color(0.42, 0.47, 0.52, 1)
+roughness = 1.0
+
+[sub_resource type="BoxMesh" id="HorizontalWallMesh"]
+material = SubResource("WallMaterial")
+size = Vector3(20, 1, 2)
+
+[sub_resource type="BoxShape3D" id="HorizontalWallShape"]
+size = Vector3(20, 1, 2)
+
+[sub_resource type="BoxMesh" id="VerticalWallMesh"]
+material = SubResource("WallMaterial")
+size = Vector3(1, 10, 2)
+
+[sub_resource type="BoxShape3D" id="VerticalWallShape"]
+size = Vector3(1, 10, 2)
+
+[sub_resource type="StandardMaterial3D" id="PlayerMaterial"]
+albedo_color = Color(0.46, 0.95, 0.76, 1)
+roughness = 0.65
+
+[sub_resource type="SphereMesh" id="PlayerMesh"]
+material = SubResource("PlayerMaterial")
+radius = 0.45
+height = 0.9
+
+[sub_resource type="SphereShape3D" id="PlayerShape"]
+radius = 0.45
+
+[node name="Main" type="Node3D"]
+
+[node name="Arena" type="Node3D" parent="."]
+
+[node name="Backdrop" type="MeshInstance3D" parent="Arena"]
+position = Vector3(0, 0, -1.1)
+mesh = SubResource("BackdropMesh")
+
+[node name="TopWall" type="StaticBody3D" parent="Arena"]
+position = Vector3(0, 5.5, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Arena/TopWall"]
+mesh = SubResource("HorizontalWallMesh")
+
+[node name="Collision" type="CollisionShape3D" parent="Arena/TopWall"]
+shape = SubResource("HorizontalWallShape")
+
+[node name="BottomWall" type="StaticBody3D" parent="Arena"]
+position = Vector3(0, -5.5, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Arena/BottomWall"]
+mesh = SubResource("HorizontalWallMesh")
+
+[node name="Collision" type="CollisionShape3D" parent="Arena/BottomWall"]
+shape = SubResource("HorizontalWallShape")
+
+[node name="LeftWall" type="StaticBody3D" parent="Arena"]
+position = Vector3(-9.5, 0, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Arena/LeftWall"]
+mesh = SubResource("VerticalWallMesh")
+
+[node name="Collision" type="CollisionShape3D" parent="Arena/LeftWall"]
+shape = SubResource("VerticalWallShape")
+
+[node name="RightWall" type="StaticBody3D" parent="Arena"]
+position = Vector3(9.5, 0, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Arena/RightWall"]
+mesh = SubResource("VerticalWallMesh")
+
+[node name="Collision" type="CollisionShape3D" parent="Arena/RightWall"]
+shape = SubResource("VerticalWallShape")
+
+[node name="Player" type="RigidBody3D" parent="."]
+gravity_scale = 0.0
+axis_lock_linear_z = true
+lock_rotation = true
+continuous_cd = true
+
+[node name="Mesh" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("PlayerMesh")
+
+[node name="Collision" type="CollisionShape3D" parent="Player"]
+shape = SubResource("PlayerShape")
+
+[node name="Camera" type="Camera3D" parent="."]
+position = Vector3(0, 0, 20)
+projection = 1
+current = true
+size = 13.0
+
+[node name="KeyLight" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-25, -30, 0)
+light_energy = 1.2
+
+[node name="FillLight" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(30, 40, 0)
+light_color = Color(0.7, 0.82, 1, 1)
+light_energy = 0.4
