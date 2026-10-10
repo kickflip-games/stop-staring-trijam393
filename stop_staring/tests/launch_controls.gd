@@ -2,7 +2,7 @@ extends SceneTree
 ## Run with Godot --headless --path stop_staring --script res://tests/launch_controls.gd
 
 var failures: Array[String] = []
-var player: RigidBody3D
+var player: CharacterBody3D
 var camera: Camera3D
 
 
@@ -20,7 +20,7 @@ func run_checks() -> void:
 		await create_timer(0.5).timeout
 	player = scene.get_node("Player")
 	camera = scene.get_node("Camera")
-	player.linear_damp = 0.0
+	player.movement_damping = 0.0
 	var origin := camera.unproject_position(Vector3.ZERO)
 	var long_drag := camera.unproject_position(Vector3(-10, 0, 0))
 	mouse_button(origin, true)
@@ -38,20 +38,20 @@ func run_checks() -> void:
 		mouse_button(origin, true)
 	mouse_button(long_drag, false)
 	check(not player.aiming, "release ends aiming")
-	check(player.linear_velocity.is_equal_approx(Vector3(player.max_launch_speed, 0, 0)), "long drag launches opposite drag at maximum speed")
+	check(player.velocity.is_equal_approx(Vector3(player.max_launch_speed, 0, 0)), "long drag launches opposite drag at maximum speed")
 	mouse_button(origin, true)
 	mouse_button(origin, false)
-	check(player.linear_velocity.is_equal_approx(Vector3(player.max_launch_speed, 0, 0)), "click preserves momentum")
+	check(player.velocity.is_equal_approx(Vector3(player.max_launch_speed, 0, 0)), "click preserves momentum")
 	var minimum_drag := camera.unproject_position(Vector3(0, -(player.drag_deadzone + 0.001), 0))
 	mouse_button(origin, true)
 	mouse_button(minimum_drag, false)
-	check(absf(player.linear_velocity.length() - player.min_launch_speed) < 0.02, "small valid drag uses minimum strength")
-	check(player.linear_velocity.y > 0 and absf(player.linear_velocity.x) < 0.001, "relaunch replaces momentum")
+	check(absf(player.velocity.length() - player.min_launch_speed) < 0.02, "small valid drag uses minimum strength")
+	check(player.velocity.y > 0 and absf(player.velocity.x) < 0.001, "relaunch replaces momentum")
 	var medium_drag := camera.unproject_position(Vector3(-1.5, 0, 0))
 	mouse_button(origin, true)
 	mouse_button(medium_drag, false)
-	check(player.linear_velocity.length() > player.min_launch_speed and player.linear_velocity.length() < player.max_launch_speed, "drag distance maps to strength")
-	var before := player.linear_velocity
+	check(player.velocity.length() > player.min_launch_speed and player.velocity.length() < player.max_launch_speed, "drag distance maps to strength")
+	var before := player.velocity
 	touch(origin, true, false)
 	check(player.aiming, "touch starts aiming")
 	var touch_drag := InputEventScreenDrag.new()
@@ -60,16 +60,16 @@ func run_checks() -> void:
 	Input.parse_input_event(touch_drag)
 	Input.flush_buffered_events()
 	touch(touch_drag.position, false, true)
-	check(player.linear_velocity.is_equal_approx(before), "canceled touch preserves momentum")
+	check(player.velocity.is_equal_approx(before), "canceled touch preserves momentum")
 	touch(origin, true, false)
 	touch(touch_drag.position, false, false)
-	check(player.linear_velocity.is_equal_approx(Vector3(0, -player.max_launch_speed, 0)), "touch releases in correct direction")
+	check(player.velocity.is_equal_approx(Vector3(0, -player.max_launch_speed, 0)), "touch releases in correct direction")
 	mouse_button(origin, true)
 	player.notification(NOTIFICATION_APPLICATION_FOCUS_OUT)
 	check(not player.aiming, "focus loss cancels aim")
 	for direction in [Vector3.RIGHT, Vector3.LEFT, Vector3.UP, Vector3.DOWN]:
 		player.position = Vector3.ZERO
-		player.linear_velocity = Vector3.ZERO
+		player.velocity = Vector3.ZERO
 		await physics_frame
 		mouse_button(origin, true)
 		mouse_button(camera.unproject_position(-direction * 3.0), false)

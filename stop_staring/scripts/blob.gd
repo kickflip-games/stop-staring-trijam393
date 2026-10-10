@@ -1,15 +1,74 @@
-extends RigidBody3D
+extends CharacterBody3D
 ## Slingshot input on the XY plane. Release replaces the current velocity.
 
 @export_range(0.5, 6.0, 0.1) var max_drag_distance: float = 3.0
 @export_range(0.01, 0.5, 0.01) var drag_deadzone: float = 0.12
 @export_range(1.0, 30.0, 0.5) var min_launch_speed: float = 4.0
 @export_range(1.0, 40.0, 0.5) var max_launch_speed: float = 18.0
+@export_range(0.0, 1.0, 0.01) var bounce_retention: float = 0.9
+@export_range(0.0, 3.0, 0.05) var movement_damping: float = 0.35
+@export_range(0.0, 2.0, 0.05) var settle_speed: float = 0.35
+
+const COLLISION_MARGIN: float = 0.001
+const MAX_COLLISIONS_PER_STEP: int = 8
 
 var aiming: bool = false
 var drag_vector: Vector3 = Vector3.ZERO
 var _drag_origin: Vector3
 var _touch_index: int = -1
+
+
+func _physics_process(delta: float) -> void:
+	velocity.z = 0.0
+	velocity *= exp(-movement_damping * delta)
+	if velocity.length() < settle_speed:
+		velocity = Vector3.ZERO
+	var remaining_time := delta
+	for step in range(MAX_COLLISIONS_PER_STEP):
+		if velocity.is_zero_approx() or remaining_time <= 0.000001:
+			break
+		var motion := velocity * remaining_time
+		var collision := move_and_collide(motion, false, COLLISION_MARGIN)
+		if collision == null:
+			break
+		remaining_time *= clampf(collision.get_remainder().length() / motion.length(), 0.0, 1.0)
+		var normal := collision.get_normal()
+		# Recovery contacts can point away from travel. Only reflect incoming hits.
+		if velocity.dot(normal) < -0.000001:
+			velocity = velocity.bounce(normal) * bounce_retention
+		if velocity.length() < settle_speed:
+			velocity = Vector3.ZERO
+	# The gameplay plane is fixed, including after collision recovery.
+	position.z = 0.0
+
+
+func get_launch_velocity() -> Vector3:
+	if drag_vector.length() < drag_deadzone:
+		return Vector3.ZERO
+	var strength := inverse_lerp(drag_deadzone, maxf(max_drag_distance, drag_deadzone + 0.001), drag_vector.length())
+	var speed := lerpf(min_launch_speed, maxf(min_launch_speed, max_launch_speed), clampf(strength, 0.0, 1.0))
+	return drag_vector.normalized() * speed
+
+
+func get_preview_endpoint(duration: float) -> Vector3:
+	var predicted_velocity := get_launch_velocity()
+	var parameters := PhysicsTestMotionParameters3D.new()
+	parameters.from = global_transform
+	parameters.margin = COLLISION_MARGIN
+	var result := PhysicsTestMotionResult3D.new()
+	var remaining_time := duration
+	# Short sweeps match physics-step precision at the first contact.
+	while remaining_time > 0.000001 and not predicted_velocity.is_zero_approx():
+		var delta := minf(remaining_time, 1.0 / Engine.physics_ticks_per_second)
+		predicted_velocity *= exp(-movement_damping * delta)
+		if predicted_velocity.length() < settle_speed:
+			break
+		parameters.motion = predicted_velocity * delta
+		if PhysicsServer3D.body_test_motion(get_rid(), parameters, result):
+			return parameters.from.origin + result.get_travel()
+		parameters.from.origin += parameters.motion
+		remaining_time -= delta
+	return parameters.from.origin
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -57,10 +116,7 @@ func _update_aim(screen_position: Vector2) -> void:
 func _release(screen_position: Vector2, canceled: bool = false) -> void:
 	_update_aim(screen_position)
 	if not canceled and drag_vector.length() >= drag_deadzone:
-		var strength := inverse_lerp(drag_deadzone, maxf(max_drag_distance, drag_deadzone + 0.001), drag_vector.length())
-		var speed := lerpf(min_launch_speed, maxf(min_launch_speed, max_launch_speed), clampf(strength, 0.0, 1.0))
-		sleeping = false
-		linear_velocity = drag_vector.normalized() * speed
+		velocity = get_launch_velocity()
 	_cancel_aim()
 
 

@@ -85,12 +85,8 @@ mesh = SubResource("VerticalWallMesh")
 [node name="Collision" type="CollisionShape3D" parent="Arena/RightWall"]
 shape = SubResource("VerticalWallShape")
 
-[node name="Player" type="RigidBody3D" parent="."]
+[node name="Player" type="CharacterBody3D" parent="."]
 script = ExtResource("1_blob")
-gravity_scale = 0.0
-axis_lock_linear_z = true
-lock_rotation = true
-continuous_cd = true
 
 [node name="Mesh" type="MeshInstance3D" parent="Player"]
 mesh = SubResource("PlayerMesh")
