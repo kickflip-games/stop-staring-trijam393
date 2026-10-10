@@ -24,6 +24,7 @@ func _physics_process(delta: float) -> void:
 	if velocity.length() < settle_speed:
 		velocity = Vector3.ZERO
 	var remaining_time := delta
+	var played_wall_sound := false
 	for step in range(MAX_COLLISIONS_PER_STEP):
 		if velocity.is_zero_approx() or remaining_time <= 0.000001:
 			break
@@ -35,6 +36,9 @@ func _physics_process(delta: float) -> void:
 		var normal := collision.get_normal()
 		# Recovery contacts can point away from travel. Only reflect incoming hits.
 		if velocity.dot(normal) < -0.000001:
+			if not played_wall_sound and collision.get_collider().is_in_group("walls"):
+				$WallHitAudio.play()
+				played_wall_sound = true
 			velocity = velocity.bounce(normal) * bounce_retention
 		if velocity.length() < settle_speed:
 			velocity = Vector3.ZERO

@@ -1,7 +1,22 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=19 format=3]
 
 [ext_resource type="Script" path="res://scripts/blob.gd" id="1_blob"]
 [ext_resource type="Script" path="res://scripts/aim_indicator.gd" id="2_aim"]
+[ext_resource type="AudioStream" path="res://audio/wall_hits/impactSoft_heavy_000.ogg" id="3_hit"]
+[ext_resource type="AudioStream" path="res://audio/wall_hits/impactSoft_heavy_001.ogg" id="4_hit"]
+[ext_resource type="AudioStream" path="res://audio/wall_hits/impactSoft_heavy_002.ogg" id="5_hit"]
+[ext_resource type="AudioStream" path="res://audio/wall_hits/impactSoft_heavy_003.ogg" id="6_hit"]
+[ext_resource type="AudioStream" path="res://audio/wall_hits/impactSoft_heavy_004.ogg" id="7_hit"]
+
+[sub_resource type="AudioStreamRandomizer" id="WallHitRandomizer"]
+random_pitch = 1.08
+random_volume_offset_db = 1.5
+streams_count = 5
+stream_0/stream = ExtResource("3_hit")
+stream_1/stream = ExtResource("4_hit")
+stream_2/stream = ExtResource("5_hit")
+stream_3/stream = ExtResource("6_hit")
+stream_4/stream = ExtResource("7_hit")
 
 [sub_resource type="StandardMaterial3D" id="BackdropMaterial"]
 albedo_color = Color(0.12, 0.15, 0.18, 1)
@@ -49,7 +64,7 @@ radius = 0.45
 position = Vector3(0, 0, -1.1)
 mesh = SubResource("BackdropMesh")
 
-[node name="TopWall" type="StaticBody3D" parent="Arena"]
+[node name="TopWall" type="StaticBody3D" parent="Arena" groups=["walls"]]
 position = Vector3(0, 5.5, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="Arena/TopWall"]
@@ -58,7 +73,7 @@ mesh = SubResource("HorizontalWallMesh")
 [node name="Collision" type="CollisionShape3D" parent="Arena/TopWall"]
 shape = SubResource("HorizontalWallShape")
 
-[node name="BottomWall" type="StaticBody3D" parent="Arena"]
+[node name="BottomWall" type="StaticBody3D" parent="Arena" groups=["walls"]]
 position = Vector3(0, -5.5, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="Arena/BottomWall"]
@@ -67,7 +82,7 @@ mesh = SubResource("HorizontalWallMesh")
 [node name="Collision" type="CollisionShape3D" parent="Arena/BottomWall"]
 shape = SubResource("HorizontalWallShape")
 
-[node name="LeftWall" type="StaticBody3D" parent="Arena"]
+[node name="LeftWall" type="StaticBody3D" parent="Arena" groups=["walls"]]
 position = Vector3(-9.5, 0, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="Arena/LeftWall"]
@@ -76,7 +91,7 @@ mesh = SubResource("VerticalWallMesh")
 [node name="Collision" type="CollisionShape3D" parent="Arena/LeftWall"]
 shape = SubResource("VerticalWallShape")
 
-[node name="RightWall" type="StaticBody3D" parent="Arena"]
+[node name="RightWall" type="StaticBody3D" parent="Arena" groups=["walls"]]
 position = Vector3(9.5, 0, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="Arena/RightWall"]
@@ -93,6 +108,11 @@ mesh = SubResource("PlayerMesh")
 
 [node name="Collision" type="CollisionShape3D" parent="Player"]
 shape = SubResource("PlayerShape")
+
+[node name="WallHitAudio" type="AudioStreamPlayer" parent="Player"]
+stream = SubResource("WallHitRandomizer")
+volume_db = -10.0
+max_polyphony = 4
 
 [node name="Camera" type="Camera3D" parent="."]
 position = Vector3(0, 0, 20)

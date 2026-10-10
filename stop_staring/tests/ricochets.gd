@@ -15,6 +15,8 @@ func run_checks() -> void:
 	await physics_frame
 	await physics_frame
 	var player: CharacterBody3D = scene.get_node("Player")
+	# Direct-step stress tests do not advance the mixer between impacts.
+	player.get_node("WallHitAudio").stream = null
 	player.set_physics_process(false)
 	player.movement_damping = 0.0
 	for sign_value in [-1.0, 1.0]:
@@ -98,6 +100,9 @@ func run_checks() -> void:
 	else:
 		for failure in failures:
 			push_error(failure)
+	scene.queue_free()
+	await process_frame
+	await process_frame
 	quit(0 if failures.is_empty() else 1)
 
 
