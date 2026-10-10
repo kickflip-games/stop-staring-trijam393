@@ -3,6 +3,7 @@ extends CharacterBody3D
 
 signal wall_bounced(contact: Vector3, normal: Vector3, impact_speed: float)
 signal wall_contact(wall: Node3D, contact: Vector3, normal: Vector3, impact_speed: float)
+signal launched(launch_velocity: Vector3)
 
 @export_range(0.5, 6.0, 0.1) var max_drag_distance: float = 3.0
 @export_range(0.01, 0.5, 0.01) var drag_deadzone: float = 0.12
@@ -139,6 +140,7 @@ func _release(screen_position: Vector2, canceled: bool = false) -> void:
 	_update_aim(screen_position, false)
 	if not canceled and drag_vector.length() >= drag_deadzone:
 		velocity = get_launch_velocity()
+		launched.emit(velocity)
 	_cancel_aim()
 
 

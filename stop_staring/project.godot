@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 EasyTransition="*res://addons/easytransition/easytransition.tscn"
 
 [display]
@@ -24,6 +25,10 @@ EasyTransition="*res://addons/easytransition/easytransition.tscn"
 window/size/viewport_width=1280
 window/size/viewport_height=800
 window/stretch/mode="canvas_items"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/easytransition/plugin.cfg", "res://addons/godot_ai/plugin.cfg")
 
 [rendering]
 

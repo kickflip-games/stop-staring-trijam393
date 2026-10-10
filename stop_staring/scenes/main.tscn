@@ -11,6 +11,8 @@
 [ext_resource type="Script" uid="uid://b2widmvskki67" path="res://scripts/wall_dust.gd" id="9_dust"]
 [ext_resource type="PackedScene" path="res://scenes/eye.tscn" id="10_eye"]
 [ext_resource type="Script" uid="uid://v0h7stywvgoh" path="res://scripts/level.gd" id="11_level"]
+[ext_resource type="Script" path="res://scripts/blob_visual.gd" id="12_visual"]
+[ext_resource type="Script" path="res://scripts/kaykit_arena_visuals.gd" id="13_kaykit"]
 
 [sub_resource type="StandardMaterial3D" id="BackdropMaterial"]
 albedo_color = Color(0.12, 0.15, 0.18, 1)
@@ -48,6 +50,23 @@ height = 0.9
 [sub_resource type="SphereShape3D" id="PlayerShape"]
 radius = 0.45
 
+[sub_resource type="StandardMaterial3D" id="TrailMaterial"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.46, 0.95, 0.76, 1)
+
+[sub_resource type="SphereMesh" id="TrailMesh"]
+material = SubResource("TrailMaterial")
+radius = 0.14
+height = 0.28
+radial_segments = 8
+rings = 4
+
+[sub_resource type="Curve" id="TrailFade"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="AudioStreamRandomizer" id="WallHitRandomizer"]
 random_pitch = 1.08
 random_volume_offset_db = 1.5
@@ -70,6 +89,9 @@ wall_path = NodePath("../Arena/TopWall")
 script = ExtResource("9_dust")
 
 [node name="Arena" type="Node3D" parent="." unique_id=268779434]
+
+[node name="KayKitVisuals" type="Node3D" parent="Arena"]
+script = ExtResource("13_kaykit")
 
 [node name="Backdrop" type="MeshInstance3D" parent="Arena" unique_id=1765221988]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.1)
@@ -114,11 +136,28 @@ shape = SubResource("VerticalWallShape")
 [node name="Player" type="CharacterBody3D" parent="." unique_id=850050057]
 script = ExtResource("1_blob")
 
-[node name="Mesh" type="MeshInstance3D" parent="Player" unique_id=1792337885]
+[node name="VisualPivot" type="Node3D" parent="Player"]
+script = ExtResource("12_visual")
+
+[node name="Mesh" type="MeshInstance3D" parent="Player/VisualPivot" unique_id=1792337885]
 mesh = SubResource("PlayerMesh")
 
 [node name="Collision" type="CollisionShape3D" parent="Player" unique_id=740426430]
 shape = SubResource("PlayerShape")
+
+[node name="MotionTrail" type="CPUParticles3D" parent="Player"]
+emitting = false
+amount = 12
+lifetime = 0.14
+local_coords = false
+mesh = SubResource("TrailMesh")
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 0.0
+initial_velocity_max = 0.0
+scale_amount_min = 0.6
+scale_amount_max = 1.0
+scale_amount_curve = SubResource("TrailFade")
+color = Color(0.46, 0.95, 0.76, 0.25)
 
 [node name="WallHitAudio" type="AudioStreamPlayer" parent="Player" unique_id=902980056]
 stream = SubResource("WallHitRandomizer")
