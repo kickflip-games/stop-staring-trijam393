@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3]
+[gd_scene load_steps=23 format=3]
 
 [ext_resource type="Script" path="res://scripts/blob.gd" id="1_blob"]
 [ext_resource type="Script" path="res://scripts/aim_indicator.gd" id="2_aim"]
@@ -7,8 +7,11 @@
 [ext_resource type="AudioStream" path="res://audio/wall_hits/impactSoft_heavy_002.ogg" id="5_hit"]
 [ext_resource type="AudioStream" path="res://audio/wall_hits/impactSoft_heavy_003.ogg" id="6_hit"]
 [ext_resource type="AudioStream" path="res://audio/wall_hits/impactSoft_heavy_004.ogg" id="7_hit"]
-[ext_resource type="AudioStream" path="res://audio/aim/stretch.mp3" id="8_stretch"]
+[ext_resource type="AudioStream" path="res://audio/aim/stretch.wav" id="8_stretch"]
 [ext_resource type="Script" path="res://scripts/wall_dust.gd" id="9_dust"]
+
+[ext_resource type="PackedScene" path="res://scenes/eye.tscn" id="10_eye"]
+[ext_resource type="Script" path="res://scripts/level.gd" id="11_level"]
 
 [sub_resource type="AudioStreamRandomizer" id="WallHitRandomizer"]
 random_pitch = 1.08
@@ -59,6 +62,12 @@ height = 0.9
 radius = 0.45
 
 [node name="Main" type="Node3D"]
+script = ExtResource("11_level")
+
+[node name="Eye" parent="." instance=ExtResource("10_eye")]
+position = Vector3(0, 5, 1.06)
+player_path = NodePath("../Player")
+wall_path = NodePath("../Arena/TopWall")
 
 [node name="WallDust" type="Node3D" parent="."]
 script = ExtResource("9_dust")
@@ -144,3 +153,13 @@ light_energy = 0.4
 script = ExtResource("2_aim")
 
 [connection signal="wall_bounced" from="Player" to="WallDust" method="burst"]
+
+[node name="EyeCounter" type="Label" parent="HUD"]
+offset_left = 30.0
+offset_top = 100.0
+offset_right = 320.0
+offset_bottom = 135.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.64, 1)
+theme_override_font_sizes/font_size = 22
+text = "EYES LEFT: 1"

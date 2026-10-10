@@ -2,6 +2,7 @@ extends CharacterBody3D
 ## Slingshot input on the XY plane. Release replaces the current velocity.
 
 signal wall_bounced(contact: Vector3, normal: Vector3, impact_speed: float)
+signal wall_contact(wall: Node3D, contact: Vector3, normal: Vector3, impact_speed: float)
 
 @export_range(0.5, 6.0, 0.1) var max_drag_distance: float = 3.0
 @export_range(0.01, 0.5, 0.01) var drag_deadzone: float = 0.12
@@ -18,6 +19,7 @@ var aiming: bool = false
 var drag_vector: Vector3 = Vector3.ZERO
 var _drag_origin: Vector3
 var _touch_index: int = -1
+var _stretch_played: bool = false
 
 
 func _physics_process(delta: float) -> void:
@@ -38,6 +40,8 @@ func _physics_process(delta: float) -> void:
 		var normal := collision.get_normal()
 		# Recovery contacts can point away from travel. Only reflect incoming hits.
 		if velocity.dot(normal) < -0.000001:
+			if collision.get_collider().is_in_group("walls"):
+				wall_contact.emit(collision.get_collider(), collision.get_position(), normal, -velocity.dot(normal))
 			if not played_wall_sound and collision.get_collider().is_in_group("walls"):
 				$WallHitAudio.play()
 				wall_bounced.emit(collision.get_position(), normal, -velocity.dot(normal))
@@ -112,6 +116,7 @@ func _notification(what: int) -> void:
 
 func _begin_aim(screen_position: Vector2) -> void:
 	$StretchAudio.stop()
+	_stretch_played = false
 	_drag_origin = _on_plane(screen_position)
 	drag_vector = Vector3.ZERO
 	aiming = true
@@ -122,10 +127,12 @@ func _update_aim(screen_position: Vector2, update_audio: bool = true) -> void:
 	if not update_audio:
 		return
 	if drag_vector.length() >= drag_deadzone:
-		if not $StretchAudio.playing:
+		if not _stretch_played:
 			$StretchAudio.play()
+			_stretch_played = true
 	else:
 		$StretchAudio.stop()
+		_stretch_played = false
 
 
 func _release(screen_position: Vector2, canceled: bool = false) -> void:
@@ -137,6 +144,7 @@ func _release(screen_position: Vector2, canceled: bool = false) -> void:
 
 func _cancel_aim() -> void:
 	$StretchAudio.stop()
+	_stretch_played = false
 	aiming = false
 	_touch_index = -1
 	drag_vector = Vector3.ZERO
