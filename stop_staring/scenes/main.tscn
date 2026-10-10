@@ -1,31 +1,19 @@
-[gd_scene load_steps=23 format=3]
+[gd_scene format=3 uid="uid://cigo4hhpkcv5y"]
 
-[ext_resource type="Script" path="res://scripts/blob.gd" id="1_blob"]
-[ext_resource type="Script" path="res://scripts/aim_indicator.gd" id="2_aim"]
-[ext_resource type="AudioStream" path="res://audio/wall_hits/impactSoft_heavy_000.ogg" id="3_hit"]
-[ext_resource type="AudioStream" path="res://audio/wall_hits/impactSoft_heavy_001.ogg" id="4_hit"]
-[ext_resource type="AudioStream" path="res://audio/wall_hits/impactSoft_heavy_002.ogg" id="5_hit"]
-[ext_resource type="AudioStream" path="res://audio/wall_hits/impactSoft_heavy_003.ogg" id="6_hit"]
-[ext_resource type="AudioStream" path="res://audio/wall_hits/impactSoft_heavy_004.ogg" id="7_hit"]
-[ext_resource type="AudioStream" path="res://audio/aim/stretch.wav" id="8_stretch"]
-[ext_resource type="Script" path="res://scripts/wall_dust.gd" id="9_dust"]
-
+[ext_resource type="Script" uid="uid://c04d6te12v8ru" path="res://scripts/blob.gd" id="1_blob"]
+[ext_resource type="Script" uid="uid://gyytjqutpc0b" path="res://scripts/aim_indicator.gd" id="2_aim"]
+[ext_resource type="AudioStream" uid="uid://i5lngcusjkbq" path="res://audio/wall_hits/impactSoft_heavy_000.ogg" id="3_hit"]
+[ext_resource type="AudioStream" uid="uid://4h00m5wgxw4k" path="res://audio/wall_hits/impactSoft_heavy_001.ogg" id="4_hit"]
+[ext_resource type="AudioStream" uid="uid://daaoom3niry8v" path="res://audio/wall_hits/impactSoft_heavy_002.ogg" id="5_hit"]
+[ext_resource type="AudioStream" uid="uid://onvwcivug51i" path="res://audio/wall_hits/impactSoft_heavy_003.ogg" id="6_hit"]
+[ext_resource type="AudioStream" uid="uid://cclgrnhxgc2b1" path="res://audio/wall_hits/impactSoft_heavy_004.ogg" id="7_hit"]
+[ext_resource type="AudioStream" uid="uid://cgbyf5ns8pqki" path="res://audio/aim/stretch.wav" id="8_stretch"]
+[ext_resource type="Script" uid="uid://b2widmvskki67" path="res://scripts/wall_dust.gd" id="9_dust"]
 [ext_resource type="PackedScene" path="res://scenes/eye.tscn" id="10_eye"]
-[ext_resource type="Script" path="res://scripts/level.gd" id="11_level"]
-
-[sub_resource type="AudioStreamRandomizer" id="WallHitRandomizer"]
-random_pitch = 1.08
-random_volume_offset_db = 1.5
-streams_count = 5
-stream_0/stream = ExtResource("3_hit")
-stream_1/stream = ExtResource("4_hit")
-stream_2/stream = ExtResource("5_hit")
-stream_3/stream = ExtResource("6_hit")
-stream_4/stream = ExtResource("7_hit")
+[ext_resource type="Script" uid="uid://v0h7stywvgoh" path="res://scripts/level.gd" id="11_level"]
 
 [sub_resource type="StandardMaterial3D" id="BackdropMaterial"]
 albedo_color = Color(0.12, 0.15, 0.18, 1)
-roughness = 1.0
 
 [sub_resource type="BoxMesh" id="BackdropMesh"]
 material = SubResource("BackdropMaterial")
@@ -33,7 +21,6 @@ size = Vector3(20, 12, 0.2)
 
 [sub_resource type="StandardMaterial3D" id="WallMaterial"]
 albedo_color = Color(0.42, 0.47, 0.52, 1)
-roughness = 1.0
 
 [sub_resource type="BoxMesh" id="HorizontalWallMesh"]
 material = SubResource("WallMaterial")
@@ -61,105 +48,114 @@ height = 0.9
 [sub_resource type="SphereShape3D" id="PlayerShape"]
 radius = 0.45
 
-[node name="Main" type="Node3D"]
+[sub_resource type="AudioStreamRandomizer" id="WallHitRandomizer"]
+random_pitch = 1.08
+random_volume_offset_db = 1.5
+streams_count = 5
+stream_0/stream = ExtResource("3_hit")
+stream_1/stream = ExtResource("4_hit")
+stream_2/stream = ExtResource("5_hit")
+stream_3/stream = ExtResource("6_hit")
+stream_4/stream = ExtResource("7_hit")
+
+[node name="Main" type="Node3D" unique_id=978000937]
 script = ExtResource("11_level")
 
-[node name="Eye" parent="." instance=ExtResource("10_eye")]
-position = Vector3(0, 5, 1.06)
+[node name="Eye" parent="." unique_id=1398796831 instance=ExtResource("10_eye")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 1.06)
 player_path = NodePath("../Player")
 wall_path = NodePath("../Arena/TopWall")
 
-[node name="WallDust" type="Node3D" parent="."]
+[node name="WallDust" type="Node3D" parent="." unique_id=523330477]
 script = ExtResource("9_dust")
 
-[node name="Arena" type="Node3D" parent="."]
+[node name="Arena" type="Node3D" parent="." unique_id=268779434]
 
-[node name="Backdrop" type="MeshInstance3D" parent="Arena"]
-position = Vector3(0, 0, -1.1)
+[node name="Backdrop" type="MeshInstance3D" parent="Arena" unique_id=1765221988]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.1)
 mesh = SubResource("BackdropMesh")
 
-[node name="TopWall" type="StaticBody3D" parent="Arena" groups=["walls"]]
-position = Vector3(0, 5.5, 0)
+[node name="TopWall" type="StaticBody3D" parent="Arena" unique_id=157789307 groups=["walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 0)
 
-[node name="Mesh" type="MeshInstance3D" parent="Arena/TopWall"]
+[node name="Mesh" type="MeshInstance3D" parent="Arena/TopWall" unique_id=508145045]
 mesh = SubResource("HorizontalWallMesh")
 
-[node name="Collision" type="CollisionShape3D" parent="Arena/TopWall"]
+[node name="Collision" type="CollisionShape3D" parent="Arena/TopWall" unique_id=2147096623]
 shape = SubResource("HorizontalWallShape")
 
-[node name="BottomWall" type="StaticBody3D" parent="Arena" groups=["walls"]]
-position = Vector3(0, -5.5, 0)
+[node name="BottomWall" type="StaticBody3D" parent="Arena" unique_id=1480479583 groups=["walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.5, 0)
 
-[node name="Mesh" type="MeshInstance3D" parent="Arena/BottomWall"]
+[node name="Mesh" type="MeshInstance3D" parent="Arena/BottomWall" unique_id=1731419606]
 mesh = SubResource("HorizontalWallMesh")
 
-[node name="Collision" type="CollisionShape3D" parent="Arena/BottomWall"]
+[node name="Collision" type="CollisionShape3D" parent="Arena/BottomWall" unique_id=929369016]
 shape = SubResource("HorizontalWallShape")
 
-[node name="LeftWall" type="StaticBody3D" parent="Arena" groups=["walls"]]
-position = Vector3(-9.5, 0, 0)
+[node name="LeftWall" type="StaticBody3D" parent="Arena" unique_id=601288944 groups=["walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, 0, 0)
 
-[node name="Mesh" type="MeshInstance3D" parent="Arena/LeftWall"]
+[node name="Mesh" type="MeshInstance3D" parent="Arena/LeftWall" unique_id=2146959519]
 mesh = SubResource("VerticalWallMesh")
 
-[node name="Collision" type="CollisionShape3D" parent="Arena/LeftWall"]
+[node name="Collision" type="CollisionShape3D" parent="Arena/LeftWall" unique_id=208738302]
 shape = SubResource("VerticalWallShape")
 
-[node name="RightWall" type="StaticBody3D" parent="Arena" groups=["walls"]]
-position = Vector3(9.5, 0, 0)
+[node name="RightWall" type="StaticBody3D" parent="Arena" unique_id=1786484690 groups=["walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 0, 0)
 
-[node name="Mesh" type="MeshInstance3D" parent="Arena/RightWall"]
+[node name="Mesh" type="MeshInstance3D" parent="Arena/RightWall" unique_id=196424701]
 mesh = SubResource("VerticalWallMesh")
 
-[node name="Collision" type="CollisionShape3D" parent="Arena/RightWall"]
+[node name="Collision" type="CollisionShape3D" parent="Arena/RightWall" unique_id=2068087153]
 shape = SubResource("VerticalWallShape")
 
-[node name="Player" type="CharacterBody3D" parent="."]
+[node name="Player" type="CharacterBody3D" parent="." unique_id=850050057]
 script = ExtResource("1_blob")
 
-[node name="Mesh" type="MeshInstance3D" parent="Player"]
+[node name="Mesh" type="MeshInstance3D" parent="Player" unique_id=1792337885]
 mesh = SubResource("PlayerMesh")
 
-[node name="Collision" type="CollisionShape3D" parent="Player"]
+[node name="Collision" type="CollisionShape3D" parent="Player" unique_id=740426430]
 shape = SubResource("PlayerShape")
 
-[node name="WallHitAudio" type="AudioStreamPlayer" parent="Player"]
+[node name="WallHitAudio" type="AudioStreamPlayer" parent="Player" unique_id=902980056]
 stream = SubResource("WallHitRandomizer")
 volume_db = -10.0
 max_polyphony = 4
 
-[node name="StretchAudio" type="AudioStreamPlayer" parent="Player"]
+[node name="StretchAudio" type="AudioStreamPlayer" parent="Player" unique_id=1377590541]
 stream = ExtResource("8_stretch")
 volume_db = -12.0
 
-[node name="Camera" type="Camera3D" parent="."]
-position = Vector3(0, 0, 20)
+[node name="Camera" type="Camera3D" parent="." unique_id=662116504]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
 projection = 1
 current = true
 size = 13.0
 
-[node name="KeyLight" type="DirectionalLight3D" parent="."]
-rotation_degrees = Vector3(-25, -30, 0)
+[node name="KeyLight" type="DirectionalLight3D" parent="." unique_id=1963982419]
+transform = Transform3D(0.8660254, 0.21130913, -0.45315388, 0, 0.90630776, 0.42261827, 0.5, -0.36599815, 0.7848855, 0, 0, 0)
 light_energy = 1.2
 
-[node name="FillLight" type="DirectionalLight3D" parent="."]
-rotation_degrees = Vector3(30, 40, 0)
+[node name="FillLight" type="DirectionalLight3D" parent="." unique_id=583133726]
+transform = Transform3D(0.76604444, 0.3213938, 0.55667037, 0, 0.8660254, -0.5, -0.6427876, 0.38302222, 0.66341394, 0, 0, 0)
 light_color = Color(0.7, 0.82, 1, 1)
 light_energy = 0.4
 
-[node name="HUD" type="CanvasLayer" parent="."]
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1654455591]
 
-[node name="AimIndicator" type="Node2D" parent="HUD"]
+[node name="AimIndicator" type="Node2D" parent="HUD" unique_id=1068912941]
 script = ExtResource("2_aim")
 
-[connection signal="wall_bounced" from="Player" to="WallDust" method="burst"]
-
-[node name="EyeCounter" type="Label" parent="HUD"]
+[node name="EyeCounter" type="Label" parent="HUD" unique_id=931544705]
 offset_left = 30.0
 offset_top = 100.0
 offset_right = 320.0
 offset_bottom = 135.0
-mouse_filter = 2
 theme_override_colors/font_color = Color(1, 0.9, 0.64, 1)
 theme_override_font_sizes/font_size = 22
 text = "EYES LEFT: 1"
+
+[connection signal="wall_bounced" from="Player" to="WallDust" method="burst"]

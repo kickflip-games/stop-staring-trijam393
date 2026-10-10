@@ -100,6 +100,9 @@ func run_checks() -> void:
 	else:
 		for failure in failures:
 			push_error(failure)
+	for audio in scene.find_children("*", "AudioStreamPlayer", true, false):
+		audio.stop()
+	await create_timer(0.1).timeout
 	scene.queue_free()
 	await process_frame
 	await process_frame
