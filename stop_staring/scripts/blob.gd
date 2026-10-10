@@ -108,23 +108,32 @@ func _notification(what: int) -> void:
 
 
 func _begin_aim(screen_position: Vector2) -> void:
+	$StretchAudio.stop()
 	_drag_origin = _on_plane(screen_position)
 	drag_vector = Vector3.ZERO
 	aiming = true
 
 
-func _update_aim(screen_position: Vector2) -> void:
+func _update_aim(screen_position: Vector2, update_audio: bool = true) -> void:
 	drag_vector = (_drag_origin - _on_plane(screen_position)).limit_length(max_drag_distance)
+	if not update_audio:
+		return
+	if drag_vector.length() >= drag_deadzone:
+		if not $StretchAudio.playing:
+			$StretchAudio.play()
+	else:
+		$StretchAudio.stop()
 
 
 func _release(screen_position: Vector2, canceled: bool = false) -> void:
-	_update_aim(screen_position)
+	_update_aim(screen_position, false)
 	if not canceled and drag_vector.length() >= drag_deadzone:
 		velocity = get_launch_velocity()
 	_cancel_aim()
 
 
 func _cancel_aim() -> void:
+	$StretchAudio.stop()
 	aiming = false
 	_touch_index = -1
 	drag_vector = Vector3.ZERO

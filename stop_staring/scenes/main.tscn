@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3]
+[gd_scene load_steps=20 format=3]
 
 [ext_resource type="Script" path="res://scripts/blob.gd" id="1_blob"]
 [ext_resource type="Script" path="res://scripts/aim_indicator.gd" id="2_aim"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" path="res://audio/wall_hits/impactSoft_heavy_002.ogg" id="5_hit"]
 [ext_resource type="AudioStream" path="res://audio/wall_hits/impactSoft_heavy_003.ogg" id="6_hit"]
 [ext_resource type="AudioStream" path="res://audio/wall_hits/impactSoft_heavy_004.ogg" id="7_hit"]
+[ext_resource type="AudioStream" path="res://audio/aim/stretch.mp3" id="8_stretch"]
 
 [sub_resource type="AudioStreamRandomizer" id="WallHitRandomizer"]
 random_pitch = 1.08
@@ -113,6 +114,10 @@ shape = SubResource("PlayerShape")
 stream = SubResource("WallHitRandomizer")
 volume_db = -10.0
 max_polyphony = 4
+
+[node name="StretchAudio" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource("8_stretch")
+volume_db = -12.0
 
 [node name="Camera" type="Camera3D" parent="."]
 position = Vector3(0, 0, 20)
